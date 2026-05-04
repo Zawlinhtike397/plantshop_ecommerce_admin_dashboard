@@ -23,9 +23,9 @@ Future<void> main() async {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) =>
-                AppBloc(authRepository: AuthenticationRepository())
-                  ..add(AppStarted()),
+            create: (context) => AppBloc(
+              authRepository: context.read<AuthenticationRepository>(),
+            )..add(AppStarted()),
           ),
         ],
         child: const MyApp(),

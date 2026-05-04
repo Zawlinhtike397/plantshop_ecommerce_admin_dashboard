@@ -12,6 +12,9 @@
 .swiftpm/
 migrate_working_dir/
 .env
+admin_dashboard_roadmap.txt
+backup_codes.dart
+
 
 # IntelliJ related
 *.iml
