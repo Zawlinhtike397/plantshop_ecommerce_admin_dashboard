@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/common/sidebar/cubit/sidebar_cubit.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/data/repositories/authentication_repository.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/bloc/app_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/screen/app.dart';
@@ -27,6 +28,7 @@ Future<void> main() async {
               authRepository: context.read<AuthenticationRepository>(),
             )..add(AppStarted()),
           ),
+          BlocProvider(create: (_) => SidebarCubit()),
         ],
         child: const MyApp(),
       ),

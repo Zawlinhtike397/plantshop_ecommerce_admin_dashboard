@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/common/header/app_header.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/common/sidebar/custom_sidebar.dart';
 
 class TabletLayout extends StatelessWidget {
   final Widget? body;
@@ -11,8 +12,7 @@ class TabletLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      drawer: Drawer(),
-      // ZSideBar(),
+      drawer: ZSideBar(),
       appBar: AppHeader(scaffoldKey: scaffoldKey),
       body: body ?? SizedBox(),
     );

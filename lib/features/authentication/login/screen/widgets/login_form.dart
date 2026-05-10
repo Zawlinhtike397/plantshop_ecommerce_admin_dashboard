@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/data/repositories/authentication_repository.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/bloc/app_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/login/bloc/login_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/text_strings.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/validator/validation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -112,16 +110,15 @@ class _LoginFormState extends State<LoginForm> {
 
               SizedBox(height: 16.0 / 2),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(AppTexts.forgetPassword),
-                  ),
-                ],
-              ),
-
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     TextButton(
+              //       onPressed: () {},
+              //       child: Text(AppTexts.forgetPassword),
+              //     ),
+              //   ],
+              // ),
               SizedBox(height: 32.0),
               BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/common/header/app_header.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/common/sidebar/custom_sidebar.dart';
 
 class DesktopLayout extends StatelessWidget {
   final Widget? body;
@@ -10,11 +11,7 @@ class DesktopLayout extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          Expanded(
-            child:
-                // ZSideBar()
-                Container(),
-          ),
+          Expanded(child: ZSideBar()),
           Expanded(
             flex: 5,
             child: Column(

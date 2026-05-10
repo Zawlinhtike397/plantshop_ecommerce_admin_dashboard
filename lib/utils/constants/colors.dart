@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class AppColor {
   AppColor._();
 
-  static const Color primary = Color(0xFF23A062);
+  static const Color primary =
+      // Color(0xFF1B8853);
+      Color(0xFF1B8853);
   static const Color accent = Color(0xFFb0c7ff);
 
   static const Color textPrimary = Colors.black;
@@ -11,6 +13,10 @@ class AppColor {
   static const Color textWhite = Colors.white;
 
   static const Color primaryBackground = Color.fromARGB(255, 240, 240, 240);
+  static final Color menuItemBackground = Color(
+    0xFF25A165,
+  ).withValues(alpha: 0.2);
+  static const Color sidebarBackground = Color(0xFFF8F8F8);
   static const Color darkBackground = Color.fromARGB(255, 7, 7, 7);
   static const Color white = Colors.white;
 
@@ -23,8 +29,8 @@ class AppColor {
   static const Color brightGreen = Color(0xFF54D394);
   static const Color red = Color(0xFFF7504B);
 
-  static const Color lightGray = Color(0xFFF2F1F1);
-  static const Color gray = Color(0xff6A707C);
+  static const Color lightGray = Color(0xFF919191);
+  static const Color gray = Color(0xff767474);
   static const Color darkerGrey = Color(0xFF272727);
   static const Color dividerColor = Color(0xFFDFDFDF);
   static const Color borderColor = Color(0xFFC3C1C1);

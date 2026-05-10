@@ -20,6 +20,7 @@ dependencies:
   connectivity_plus: ^7.0.0
   equatable: ^2.0.8
   bloc: ^9.2.0
+  flutter_svg: ^2.2.3
 
 dev_dependencies:
   flutter_test:
@@ -38,6 +39,7 @@ flutter:
   assets:
     - assets/logos/
     - assets/animations/
+    - assets/svgs/
     - .env
     
   # fonts:
