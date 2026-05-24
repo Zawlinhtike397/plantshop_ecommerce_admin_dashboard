@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/common/header/app_header.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/common/sidebar/custom_sidebar.dart';
 
 class MobileLayout extends StatelessWidget {
@@ -14,7 +13,8 @@ class MobileLayout extends StatelessWidget {
       key: scaffoldKey,
       drawer: ZSideBar(),
       // ZSideBar(),
-      appBar: AppHeader(scaffoldKey: scaffoldKey),
+      appBar: AppBar(),
+      // AppHeader(scaffoldKey: scaffoldKey),
       body: body ?? SizedBox(),
     );
   }

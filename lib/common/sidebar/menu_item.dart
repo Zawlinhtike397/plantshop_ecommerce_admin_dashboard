@@ -6,6 +6,7 @@ import 'package:plantfiy_plantshop_admin_dashboard/common/sidebar/cubit/sidebar_
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/bloc/app_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/routes/app_routes.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
+import 'package:url_launcher/link.dart';
 
 class ZMenuItem extends StatelessWidget {
   final String iconPath;
@@ -27,60 +28,67 @@ class ZMenuItem extends StatelessWidget {
     final isActive = state.activeItem == route;
     final isHovering = state.hoverItem == route;
 
-    return InkWell(
-      onTap: () {
-        if (route == AppRoutes.logout) {
-          context.read<AppBloc>().add(LoggedOut());
-          return;
-        }
+    return Link(
+      uri: route != null && route != AppRoutes.logout
+          ? Uri.parse(route!)
+          : null,
+      builder: (context, followLink) => InkWell(
+        onTap: () {
+          if (route == AppRoutes.logout) {
+            context.read<AppBloc>().add(LoggedOut());
+            return;
+          }
 
-        if (route != null) {
-          cubit.setActive(route!);
-          context.go(route!);
-        }
-      },
-      onHover: (hovering) {
-        if (route == AppRoutes.logout) {
-          return;
-        }
-        if (route != null) {
-          hovering ? cubit.setHover(route!) : cubit.clearHover();
-        }
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: (isActive || isHovering)
-              ? AppColor.menuItemBackground
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              iconPath,
-              width: 20,
-              height: 20,
-              colorFilter: ColorFilter.mode(
-                (isActive || isHovering)
-                    ? AppColor.primary
-                    : AppColor.lightGray,
-                BlendMode.srcIn,
-              ),
-            ),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                itemName,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: (isActive || isHovering)
+          if (route != null) {
+            cubit.setActive(route!);
+            followLink?.call();
+            context.go(route!);
+          }
+        },
+        onHover: (hovering) {
+          if (route == AppRoutes.logout) {
+            return;
+          }
+
+          if (route != null) {
+            hovering ? cubit.setHover(route!) : cubit.clearHover();
+          }
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: (isActive || isHovering)
+                ? AppColor.menuItemBackground
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                iconPath,
+                width: 20,
+                height: 20,
+                colorFilter: ColorFilter.mode(
+                  (isActive || isHovering)
                       ? AppColor.primary
                       : AppColor.lightGray,
-                  fontSize: 13,
+                  BlendMode.srcIn,
                 ),
               ),
-            ),
-          ],
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  itemName,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: (isActive || isHovering)
+                        ? AppColor.primary
+                        : AppColor.lightGray,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

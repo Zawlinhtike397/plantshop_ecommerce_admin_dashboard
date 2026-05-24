@@ -7,6 +7,7 @@ import 'package:plantfiy_plantshop_admin_dashboard/routes/app_routes.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/enums.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/image_strings.dart';
+import 'package:url_launcher/link.dart';
 
 class ZSideBar extends StatefulWidget {
   const ZSideBar({super.key});
@@ -29,7 +30,7 @@ class _ZSideBarState extends State<ZSideBar> {
         ),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(4.0),
             child: Column(
               // spacing: 3,
               children: [
@@ -149,11 +150,6 @@ class _ZSideBarState extends State<ZSideBar> {
                               ],
                             ),
                           ),
-                          // ZMenuItem(
-                          //   itemName: 'Dark Mode',
-                          //   route: null,
-                          //   iconPath: ImageStrings.darkModeIcon,
-                          // ),
                         ],
                       ),
                       SizedBox(height: 70),
@@ -168,25 +164,25 @@ class _ZSideBarState extends State<ZSideBar> {
                                 width: 60,
                                 height: 60,
                               ),
-                              Column(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      context.go(AppRoutes.profilePath);
-                                    },
-                                    child: Text(
-                                      'Plantify Admin',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                            color: AppColor.darkTeal,
-                                            fontSize: 13,
-                                            // fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
+                              Link(
+                                uri: Uri.parse(AppRoutes.profilePath),
+                                builder: (context, followLink) => InkWell(
+                                  onTap: () {
+                                    followLink?.call();
+                                    context.go(AppRoutes.profilePath);
+                                  },
+                                  child: Text(
+                                    'Plantify Admin',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          color: AppColor.darkTeal,
+                                          fontSize: 13,
+                                          // fontWeight: FontWeight.bold,
+                                        ),
                                   ),
-                                ],
+                                ),
                               ),
                             ],
                           ),

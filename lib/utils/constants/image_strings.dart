@@ -1,7 +1,9 @@
 class ImageStrings {
   static const String appLogo = 'assets/logos/plantify_logo.png';
+
   static const String loadingAnimation =
       'assets/animations/doceranimation.json';
+  static const String emptyAnimation = 'assets/animations/empty-searching.json';
 
   static const String dashboardIcon = 'assets/svgs/dashboard.svg';
   static const String productIcon = 'assets/svgs/package.svg';

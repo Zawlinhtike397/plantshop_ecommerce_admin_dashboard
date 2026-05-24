@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/common/sidebar/cubit/sidebar_cubit.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/data/repositories/authentication_repository.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/data/repositories/order_repository.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/bloc/app_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/screen/app.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/bloc/order_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -20,6 +22,7 @@ Future<void> main() async {
     MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (_) => AuthenticationRepository()),
+        RepositoryProvider(create: (_) => OrderRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -29,6 +32,11 @@ Future<void> main() async {
             )..add(AppStarted()),
           ),
           BlocProvider(create: (_) => SidebarCubit()),
+          BlocProvider(
+            create: (context) =>
+                OrderBloc(repository: context.read<OrderRepository>())
+                  ..add(FetchOrders()),
+          ),
         ],
         child: const MyApp(),
       ),

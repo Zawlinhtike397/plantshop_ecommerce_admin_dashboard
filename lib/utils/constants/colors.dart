@@ -29,6 +29,12 @@ class AppColor {
   static const Color brightGreen = Color(0xFF54D394);
   static const Color red = Color(0xFFF7504B);
 
+  static const colorIndoor = Color(0xFF229A65);
+  static const colorOutdoor = Color(0xFFD3D183);
+  static const colorGardening = Color(0xFF58C8CD);
+  static const colorFlowering = Color(0xFFF7504B);
+  static const colorHanging = Color(0xFF5D87FF);
+
   static const Color lightGray = Color(0xFF919191);
   static const Color gray = Color(0xff767474);
   static const Color darkerGrey = Color(0xFF272727);

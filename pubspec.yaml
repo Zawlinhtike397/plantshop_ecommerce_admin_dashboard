@@ -21,7 +21,12 @@ dependencies:
   equatable: ^2.0.8
   bloc: ^9.2.0
   flutter_svg: ^2.2.3
-
+  url_launcher: ^6.3.2
+  fl_chart: ^0.71.0
+  data_table_2: ^2.7.2
+  cached_network_image: ^3.4.1
+  shimmer: ^3.0.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
