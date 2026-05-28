@@ -7,6 +7,8 @@ class PlantModel {
   String height;
   String category;
   int stock;
+  int maxStock;
+  DateTime? restockedAt;
   String temperature;
   String pot;
   String thumbnailImg;
@@ -21,6 +23,8 @@ class PlantModel {
     required this.height,
     required this.category,
     required this.stock,
+    required this.maxStock,
+    this.restockedAt,
     required this.temperature,
     required this.pot,
     required this.thumbnailImg,
@@ -36,6 +40,8 @@ class PlantModel {
     height: '',
     category: '',
     stock: 3,
+    maxStock: 50,
+    restockedAt: null,
     temperature: '',
     pot: '',
     thumbnailImg: '',
@@ -51,6 +57,8 @@ class PlantModel {
       'height': height,
       'category': category,
       'stock': stock,
+      'maxStock': maxStock,
+      'lastRestockedAt': restockedAt?.toIso8601String(),
       'temperature': temperature,
       'pot': pot,
       'thumbnailImg': thumbnailImg,
@@ -86,6 +94,10 @@ class PlantModel {
       height: json['height']?.toString() ?? '',
       category: json['category']?.toString() ?? '',
       stock: (json['stock'] as num?)?.toInt() ?? 0,
+      maxStock: (json['maxStock'] as num?)?.toInt() ?? 50,
+      restockedAt: json['lastRestockedAt'] != null
+          ? DateTime.parse(json['lastRestockedAt'])
+          : null,
       temperature: json['temperature']?.toString() ?? '',
       pot: json['pot']?.toString() ?? '',
       thumbnailImg: json['thumbnailImg']?.toString() ?? '',

@@ -56,7 +56,7 @@ class TopProductsDataTable extends StatelessWidget {
                     );
 
                 return SizedBox(
-                  height: 440,
+                  height: 410,
                   child: AppPaginatedDataTable(
                     minWidth: 700,
                     // tableHeight: 420,

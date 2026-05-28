@@ -16,6 +16,7 @@ class AppColor {
   static final Color menuItemBackground = Color(
     0xFF25A165,
   ).withValues(alpha: 0.2);
+
   static const Color sidebarBackground = Color(0xFFF8F8F8);
   static const Color darkBackground = Color.fromARGB(255, 7, 7, 7);
   static const Color white = Colors.white;

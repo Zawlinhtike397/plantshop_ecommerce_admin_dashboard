@@ -4,9 +4,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/common/sidebar/cubit/sidebar_cubit.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/data/repositories/authentication_repository.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/data/repositories/order_repository.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/data/repositories/stock_repository.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/bloc/app_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/screen/app.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/bloc/order_bloc.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/stock/bloc/stock_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -36,6 +38,11 @@ Future<void> main() async {
             create: (context) =>
                 OrderBloc(repository: context.read<OrderRepository>())
                   ..add(FetchOrders()),
+          ),
+          BlocProvider(
+            create: (_) =>
+                StockBloc(repository: StockRepository())
+                  ..add(FetchLowStockItems()),
           ),
         ],
         child: const MyApp(),
