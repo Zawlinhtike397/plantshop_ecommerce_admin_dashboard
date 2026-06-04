@@ -16,6 +16,8 @@ class CategoryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,10 +36,10 @@ class CategoryRow extends StatelessWidget {
             const SizedBox(width: 12.0),
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                color: Colors.black,
+                color: isDarkMode ? Colors.white : Colors.black,
               ),
             ),
           ],
@@ -56,17 +58,17 @@ class CategoryRow extends StatelessWidget {
                   children: [
                     Text(
                       amount,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
-                        color: Colors.black45,
+                        color: isDarkMode ? Colors.white54 : Colors.black45,
                       ),
                     ),
                     const SizedBox(height: 2.0),
                     Text(
                       '($soldCount)',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: Colors.black38,
+                        color: isDarkMode ? Colors.white38 : Colors.black38,
                       ),
                     ),
                   ],
@@ -77,17 +79,17 @@ class CategoryRow extends StatelessWidget {
                   children: [
                     Text(
                       amount,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
-                        color: Colors.black45,
+                        color: isDarkMode ? Colors.white54 : Colors.black45,
                       ),
                     ),
                     const SizedBox(width: 6.0),
                     Text(
                       '($soldCount)',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
-                        color: Colors.black38,
+                        color: isDarkMode ? Colors.white38 : Colors.black38,
                       ),
                     ),
                   ],

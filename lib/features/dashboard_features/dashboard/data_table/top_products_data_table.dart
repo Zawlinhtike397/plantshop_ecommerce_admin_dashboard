@@ -5,6 +5,7 @@ import 'package:plantfiy_plantshop_admin_dashboard/common/data_table/paginated_d
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/data_table/top_product_rows.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/bloc/order_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/model/order_item_model.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/services/dashboard_analytics_services.dart';
 
 class TopProductsDataTable extends StatelessWidget {
@@ -12,10 +13,12 @@ class TopProductsDataTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(24.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDarkMode ? AppColor.dark1 : Colors.white,
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: Column(
@@ -25,7 +28,7 @@ class TopProductsDataTable extends StatelessWidget {
             'Top Selling Products',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Colors.black87,
+              color: isDarkMode ? Colors.white : Colors.black87,
             ),
           ),
 
@@ -61,6 +64,7 @@ class TopProductsDataTable extends StatelessWidget {
                     minWidth: 700,
                     // tableHeight: 420,
                     rowsPerPage: 5,
+                    isDarkMode: isDarkMode,
                     columns: const [
                       DataColumn2(
                         label: Align(
@@ -90,11 +94,13 @@ class TopProductsDataTable extends StatelessWidget {
                       DataColumn2(label: Text('Sale Revenues')),
                     ],
                     // Earnings
-                    source: TopProductsRows(products: productStats),
+                    source: TopProductsRows(
+                      products: productStats,
+                      isDarkMode: isDarkMode,
+                    ),
                   ),
                 );
               }
-
               return SizedBox();
             },
           ),

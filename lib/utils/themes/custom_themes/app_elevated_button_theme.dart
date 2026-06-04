@@ -36,7 +36,7 @@ class AppElevatedButtonTheme {
         fontWeight: FontWeight.w500,
         fontSize: 16,
       ),
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 18),
     ),
   );
 }

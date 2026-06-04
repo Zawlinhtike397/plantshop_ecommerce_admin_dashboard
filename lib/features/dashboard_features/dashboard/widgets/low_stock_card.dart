@@ -13,6 +13,8 @@ class LowStockCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final double progress = item.currentStock / item.maxStock;
 
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final bool isSmallScreen = constraints.maxWidth < 450;
@@ -21,14 +23,21 @@ class LowStockCard extends StatelessWidget {
         final Widget stockProgressBlock = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Stock level", style: TextStyle(color: Colors.grey.shade700)),
+            Text(
+              "Stock level",
+              style: TextStyle(
+                color: isDarkMode ? Colors.grey.shade400 : Colors.grey.shade700,
+              ),
+            ),
             const SizedBox(height: 5),
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: LinearProgressIndicator(
                 value: progress,
                 minHeight: 10,
-                backgroundColor: Colors.grey.shade200,
+                backgroundColor: isDarkMode
+                    ? Colors.grey.shade800
+                    : Colors.grey.shade200,
                 valueColor: AlwaysStoppedAnimation(item.statusColor),
               ),
             ),
@@ -38,11 +47,19 @@ class LowStockCard extends StatelessWidget {
               children: [
                 Text(
                   "${item.currentStock}",
-                  style: TextStyle(color: Colors.grey.shade700),
+                  style: TextStyle(
+                    color: isDarkMode
+                        ? Colors.grey.shade400
+                        : Colors.grey.shade700,
+                  ),
                 ),
                 Text(
                   "${item.maxStock}",
-                  style: TextStyle(color: Colors.grey.shade700),
+                  style: TextStyle(
+                    color: isDarkMode
+                        ? Colors.grey.shade400
+                        : Colors.grey.shade700,
+                  ),
                 ),
               ],
             ),
@@ -129,12 +146,20 @@ class LowStockCard extends StatelessWidget {
 
             Text(
               "Product ID: ${item.productId}",
-              style: TextStyle(color: Colors.grey.shade700, fontSize: 15),
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: isDarkMode ? Colors.grey.shade400 : Colors.grey.shade700,
+                fontWeight: FontWeight.normal,
+                fontSize: 15,
+              ),
             ),
 
             Text(
               "Category: ${item.category}",
-              style: TextStyle(color: Colors.grey.shade700, fontSize: 15),
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: isDarkMode ? Colors.grey.shade400 : Colors.grey.shade700,
+                fontWeight: FontWeight.normal,
+                fontSize: 15,
+              ),
             ),
             const SizedBox(height: 15),
 
@@ -161,9 +186,11 @@ class LowStockCard extends StatelessWidget {
 
             Text(
               item.formattedRestockedAt.isEmpty
-                  ? ""
-                  : "Last restocked     ${item.formattedRestockedAt}",
-              style: TextStyle(color: Colors.grey.shade700),
+                  ? "Item is not restocked yet"
+                  : "Last restocked:     ${item.formattedRestockedAt}",
+              style: TextStyle(
+                color: isDarkMode ? Colors.grey.shade400 : Colors.grey.shade700,
+              ),
             ),
           ],
         );
@@ -171,8 +198,12 @@ class LowStockCard extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            border: Border.all(color: AppColor.borderColor),
-            color: AppColor.sidebarBackground,
+            border: Border.all(
+              color: isDarkMode ? Colors.white10 : AppColor.borderColor,
+            ),
+            color: isDarkMode
+                ? const Color(0xFF262626)
+                : AppColor.sidebarBackground,
             borderRadius: BorderRadius.circular(20),
           ),
           child: isSmallScreen

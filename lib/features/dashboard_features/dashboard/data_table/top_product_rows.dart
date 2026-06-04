@@ -6,14 +6,16 @@ import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/enums.dart';
 
 class TopProductsRows extends DataTableSource {
   final List<ProductAnalyticModel> products;
+  final bool isDarkMode;
 
-  TopProductsRows({required this.products});
+  TopProductsRows({required this.products, this.isDarkMode = false});
 
   @override
   DataRow? getRow(int index) {
     if (index >= products.length) return null;
 
     final item = products[index];
+    final textColor = isDarkMode ? Colors.white70 : Colors.black87;
 
     return DataRow2(
       cells: [
@@ -21,7 +23,6 @@ class TopProductsRows extends DataTableSource {
           Row(
             children: [
               ClipRRect(
-                // borderRadius: BorderRadius.circular(8),
                 child: AppCircularImage(
                   padding: 0.0,
                   imageType: ImageType.network,
@@ -37,7 +38,10 @@ class TopProductsRows extends DataTableSource {
               Expanded(
                 child: Text(
                   item.plant.name,
-                  style: const TextStyle(fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: isDarkMode ? Colors.white : Colors.black87,
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -49,21 +53,30 @@ class TopProductsRows extends DataTableSource {
         DataCell(
           Align(
             alignment: Alignment.center,
-            child: Text(item.plant.stock.toString()),
+            child: Text(
+              item.plant.stock.toString(),
+              style: TextStyle(color: textColor),
+            ),
           ),
         ),
 
         DataCell(
           Align(
             alignment: Alignment.center,
-            child: Text(item.plant.originalPrice.toStringAsFixed(0)),
+            child: Text(
+              item.plant.originalPrice.toStringAsFixed(0),
+              style: TextStyle(color: textColor),
+            ),
           ),
         ),
 
         DataCell(
           Align(
             alignment: Alignment.center,
-            child: Text(item.unitSold.toString()),
+            child: Text(
+              item.unitSold.toString(),
+              style: TextStyle(color: textColor),
+            ),
           ),
         ),
 
@@ -73,6 +86,7 @@ class TopProductsRows extends DataTableSource {
             child: Text(
               ' ${item.totalRevenue.toStringAsFixed(0)} MMK',
               textAlign: TextAlign.right,
+              style: TextStyle(color: textColor),
             ),
           ),
         ),

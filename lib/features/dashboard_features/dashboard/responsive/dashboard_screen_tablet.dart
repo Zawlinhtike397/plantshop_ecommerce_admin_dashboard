@@ -41,17 +41,6 @@ class DashboardScreenTablet extends StatelessWidget {
                       child: LowStockAlertsSection(),
                     ),
                   ),
-                  // Expanded(
-                  //   flex: 2,
-                  //   child: Container(
-                  //     decoration: BoxDecoration(
-                  //       color: Colors.brown,
-                  //       borderRadius: BorderRadius.circular(10.0),
-                  //     ),
-                  //     width: double.infinity,
-                  //     height: 200,
-                  //   ),
-                  // ),
                 ],
               ),
               Row(

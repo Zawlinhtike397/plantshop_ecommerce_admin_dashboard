@@ -15,6 +15,7 @@ class AppPaginatedDataTable extends StatefulWidget {
   final double dataRowHeight;
   final double tableHeight;
   final double? minWidth;
+  final bool isDarkMode;
 
   const AppPaginatedDataTable({
     super.key,
@@ -27,6 +28,7 @@ class AppPaginatedDataTable extends StatefulWidget {
     this.dataRowHeight = 32.0 * 2,
     this.sortAscending = true,
     this.minWidth = 1000,
+    required this.isDarkMode,
   });
 
   @override
@@ -47,7 +49,9 @@ class _AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
     return Theme(
       data: Theme.of(context).copyWith(
         cardTheme: CardThemeData(
-          color: AppColor.sidebarBackground,
+          color: widget.isDarkMode
+              ? AppColor.dark3
+              : AppColor.sidebarBackground,
           elevation: 0,
         ),
       ),
@@ -75,7 +79,7 @@ class _AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
         sortColumnIndex: widget.sortColumnIndex,
         headingTextStyle: Theme.of(context).textTheme.titleMedium,
         headingRowColor: WidgetStateColor.resolveWith(
-          (states) => AppColor.accent,
+          (states) => widget.isDarkMode ? AppColor.primary : AppColor.accent,
         ),
         empty: AnimationLoader(
           text: 'Nothing found',
@@ -94,6 +98,7 @@ class _AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
             return Icon(
               ascending ? Iconsax.arrow_up_3 : Iconsax.arrow_down,
               size: 16.0,
+              color: widget.isDarkMode ? Colors.white : Colors.black,
             );
           } else {
             return Icon(Iconsax.arrow_3, size: 16.0);

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/themes/cubit/theme_cubit.dart';
 
 class AlertSummaryBox extends StatelessWidget {
   final String title;
@@ -19,6 +21,8 @@ class AlertSummaryBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(18),
@@ -26,7 +30,11 @@ class AlertSummaryBox extends StatelessWidget {
         height: 72,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
-          color: isSelected ? AppColor.chipColor : Colors.transparent,
+          color: isSelected
+              ? (isDarkMode
+                    ? Colors.white.withValues(alpha: 0.1)
+                    : AppColor.chipColor)
+              : Colors.transparent,
           border: Border.all(color: Colors.grey.shade300),
           borderRadius: BorderRadius.circular(18),
         ),
@@ -41,9 +49,9 @@ class AlertSummaryBox extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge!.copyWith(color: AppColor.midGray),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: isDarkMode ? Colors.grey.shade400 : AppColor.midGray,
+                  ),
                   //  TextStyle(color: Colors.grey.shade600, fontSize: 15),
                 ),
                 const SizedBox(height: 4),

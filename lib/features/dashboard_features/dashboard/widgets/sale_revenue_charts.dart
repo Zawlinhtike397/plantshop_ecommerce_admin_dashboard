@@ -1,8 +1,11 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/model/revenue_data_model.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/model/order_model.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/services/revenue_services.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/themes/cubit/theme_cubit.dart';
 
 class SalesRevenueChart extends StatefulWidget {
   final List<OrderModel> orders;
@@ -54,7 +57,7 @@ class _SalesRevenueChartState extends State<SalesRevenueChart> {
           toY: y,
           width: 30,
           borderRadius: BorderRadius.circular(4),
-          color: const Color(0xFF2CA66F),
+          color: AppColor.buttonPrimary,
         ),
       ],
     );
@@ -80,10 +83,15 @@ class _SalesRevenueChartState extends State<SalesRevenueChart> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDarkMode
+            ? AppColor.dark1
+            //  const Color(0xFF1A1A1A)
+            : Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -97,12 +105,12 @@ class _SalesRevenueChartState extends State<SalesRevenueChart> {
                 'Sales Revenue',
                 style: Theme.of(
                   context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                ).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
+                  color: isDarkMode ? AppColor.dark2 : Colors.grey.shade100,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: DropdownButtonHideUnderline(
@@ -190,7 +198,6 @@ class _SalesRevenueChartState extends State<SalesRevenueChart> {
                                   getTitlesWidget: (value, meta) {
                                     return SideTitleWidget(
                                       meta: meta,
-                                      // 2. OPTIONAL: Add space between text and the chart line
                                       space: 8,
                                       child: Text(
                                         meta.formattedValue,

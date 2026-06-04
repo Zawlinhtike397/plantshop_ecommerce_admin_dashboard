@@ -9,6 +9,7 @@ import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/b
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/screen/app.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/bloc/order_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/stock/bloc/stock_bloc.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/themes/cubit/theme_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -34,6 +35,7 @@ Future<void> main() async {
             )..add(AppStarted()),
           ),
           BlocProvider(create: (_) => SidebarCubit()),
+          BlocProvider(create: (_) => ThemeCubit()),
           BlocProvider(
             create: (context) =>
                 OrderBloc(repository: context.read<OrderRepository>())

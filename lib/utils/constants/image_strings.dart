@@ -15,4 +15,6 @@ class ImageStrings {
   static const String settingsIcon = 'assets/svgs/settings.svg';
   static const String darkModeIcon = 'assets/svgs/dark_mode.svg';
   static const String logoutIcon = 'assets/svgs/logout.svg';
+
+  static const String avatarPlaceHolder = 'assets/logos/avatar_bg.png';
 }

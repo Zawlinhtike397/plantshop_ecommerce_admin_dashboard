@@ -9,6 +9,7 @@ class OverallDataCard extends StatelessWidget {
   final IconData? icon;
   final Color? color;
   final void Function()? onTap;
+  final bool isDarkMode;
 
   const OverallDataCard({
     super.key,
@@ -18,21 +19,28 @@ class OverallDataCard extends StatelessWidget {
     this.icon = Icons.arrow_drop_up,
     this.color = AppColor.primary,
     this.onTap,
+    required this.isDarkMode,
   });
 
   @override
   Widget build(BuildContext context) {
+    final dark = isDarkMode;
+
     return AppRoundedContainer(
       onTap: onTap,
       padding: EdgeInsets.all(15.0),
+      backgroundColor: dark
+          ? AppColor.dark1
+          // const Color(0xFF1A1A1A)
+          : AppColor.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium!.copyWith(color: AppColor.midGray),
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: dark ? Colors.grey.shade400 : AppColor.midGray,
+            ),
           ),
           SizedBox(height: 10.0),
           Row(

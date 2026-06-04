@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/widgets/category_row.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/bloc/order_bloc.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/services/dashboard_analytics_services.dart';
 
 class TopCategoriesPieChart extends StatelessWidget {
@@ -10,6 +11,8 @@ class TopCategoriesPieChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         if (state is OrderLoading) {
@@ -36,7 +39,7 @@ class TopCategoriesPieChart extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.all(24.0),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: isDarkMode ? AppColor.dark1 : Colors.white,
             borderRadius: BorderRadius.circular(16.0),
           ),
           child: Column(
@@ -46,7 +49,7 @@ class TopCategoriesPieChart extends StatelessWidget {
                 'Top Selling Categories',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: isDarkMode ? Colors.white : Colors.black87,
                 ),
               ),
 

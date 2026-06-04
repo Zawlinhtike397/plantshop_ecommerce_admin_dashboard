@@ -6,7 +6,10 @@ class LoginTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Center(
         child: SizedBox(
           width: 550,
@@ -19,7 +22,7 @@ class LoginTemplate extends StatelessWidget {
                 top: 24.0,
               ),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: child,

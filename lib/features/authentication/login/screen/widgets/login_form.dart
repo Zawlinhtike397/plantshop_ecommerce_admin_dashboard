@@ -110,15 +110,6 @@ class _LoginFormState extends State<LoginForm> {
 
               SizedBox(height: 16.0 / 2),
 
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: [
-              //     TextButton(
-              //       onPressed: () {},
-              //       child: Text(AppTexts.forgetPassword),
-              //     ),
-              //   ],
-              // ),
               SizedBox(height: 32.0),
               BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) {

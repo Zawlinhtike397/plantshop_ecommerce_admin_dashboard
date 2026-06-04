@@ -17,16 +17,18 @@ class LayoutTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppResponsiveWidget(
-      mobileWidget: useLayout
-          ? MobileLayout(body: mobile ?? desktop)
-          : mobile ?? desktop ?? Container(),
-      tabletWidget: useLayout
-          ? TabletLayout(body: tablet ?? desktop)
-          : tablet ?? desktop ?? Container(),
-      desktopWidget: useLayout
-          ? DesktopLayout(body: desktop)
-          : desktop ?? Container(),
+    return SafeArea(
+      child: AppResponsiveWidget(
+        mobileWidget: useLayout
+            ? MobileLayout(body: mobile ?? desktop)
+            : mobile ?? desktop ?? Container(),
+        tabletWidget: useLayout
+            ? TabletLayout(body: tablet ?? desktop)
+            : tablet ?? desktop ?? Container(),
+        desktopWidget: useLayout
+            ? DesktopLayout(body: desktop)
+            : desktop ?? Container(),
+      ),
     );
   }
 }

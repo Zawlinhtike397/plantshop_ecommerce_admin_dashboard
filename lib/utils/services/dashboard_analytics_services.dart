@@ -32,8 +32,6 @@ class DashboardAnalyticsService {
       AppColor.colorGardening,
       AppColor.colorFlowering,
       AppColor.colorHanging,
-      // Colors.blue,
-      // Colors.orange,
     ];
 
     int colorIndex = 0;

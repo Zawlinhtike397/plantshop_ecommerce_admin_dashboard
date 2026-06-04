@@ -42,4 +42,12 @@ class AppColor {
   static const Color dividerColor = Color(0xFFDFDFDF);
   static const Color borderColor = Color(0xFFC3C1C1);
   static const Color chipColor = Color(0xFFF2F1F1);
+
+  static const Color dark1 = Color(0xFF1A1A1A);
+  static const Color dark2 = Color(0xFF2A2A2A);
+  static const Color dark3 = Color(0xFF121212);
+
+  static const Color criticalStockColor = Colors.red;
+  static const Color lowStockColor = Color.fromARGB(255, 237, 131, 93);
+  static const Color warningStockColor = Color(0xFFEAB308);
 }

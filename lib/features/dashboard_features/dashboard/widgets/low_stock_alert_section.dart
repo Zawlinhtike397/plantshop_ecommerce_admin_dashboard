@@ -4,6 +4,8 @@ import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/s
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/stock/model/low_stock_item_model.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/widgets/alert_summary_box.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/widgets/low_stock_card.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/themes/cubit/theme_cubit.dart';
 
 class LowStockAlertsSection extends StatefulWidget {
   const LowStockAlertsSection({super.key});
@@ -16,13 +18,13 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
   String selectedFilter = 'Out of Stock';
 
   List<LowStockItem> _filter(List<LowStockItem> items) {
-    // if (selectedFilter == "All") return items;
-
     return items.where((e) => e.status == selectedFilter).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return BlocBuilder<StockBloc, StockState>(
       builder: (context, state) {
         if (state is StockLoading) {
@@ -53,7 +55,7 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
         return Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: isDarkMode ? AppColor.dark1 : AppColor.white,
             borderRadius: BorderRadius.circular(24),
           ),
           child: Column(
@@ -97,7 +99,7 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
                                 child: AlertSummaryBox(
                                   title: "Out of Stock",
                                   count: criticalCount,
-                                  color: Colors.red,
+                                  color: AppColor.criticalStockColor,
                                   isSelected: selectedFilter == "Out of Stock",
                                   onTap: () {
                                     setState(() {
@@ -112,7 +114,7 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
                                 child: AlertSummaryBox(
                                   title: "Low",
                                   count: lowCount,
-                                  color: Color.fromARGB(255, 237, 131, 93),
+                                  color: AppColor.lowStockColor,
                                   isSelected: selectedFilter == "Low",
                                   onTap: () {
                                     setState(() {
@@ -128,7 +130,7 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
                                 child: AlertSummaryBox(
                                   title: "Warning",
                                   count: warningCount,
-                                  color: Color(0xFFEAB308),
+                                  color: AppColor.warningStockColor,
                                   isSelected: selectedFilter == "Warning",
                                   onTap: () {
                                     setState(() {
@@ -154,7 +156,9 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
                                 child: Text(
                                   "No items found",
                                   style: TextStyle(
-                                    color: Colors.grey.shade600,
+                                    color: isDarkMode
+                                        ? Colors.grey.shade400
+                                        : Colors.grey.shade600,
                                     fontSize: 16,
                                   ),
                                 ),

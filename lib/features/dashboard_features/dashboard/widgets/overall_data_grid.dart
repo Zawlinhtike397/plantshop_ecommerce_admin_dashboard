@@ -6,6 +6,8 @@ class OverallDataGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         double width = constraints.maxWidth;
@@ -33,6 +35,7 @@ class OverallDataGrid extends StatelessWidget {
                 title: 'Total Orders',
                 subTitle: '200',
                 stats: 30,
+                isDarkMode: isDarkMode,
               ),
             ),
 
@@ -42,6 +45,7 @@ class OverallDataGrid extends StatelessWidget {
                 title: 'Customers',
                 subTitle: '3500',
                 stats: 10,
+                isDarkMode: isDarkMode,
               ),
             ),
 
@@ -51,6 +55,7 @@ class OverallDataGrid extends StatelessWidget {
                 title: 'Total Revenues',
                 subTitle: '44,50000MMK',
                 stats: 10,
+                isDarkMode: isDarkMode,
               ),
             ),
 
@@ -60,6 +65,7 @@ class OverallDataGrid extends StatelessWidget {
                 title: 'Average Order Value',
                 subTitle: '300,00MMK',
                 stats: 10,
+                isDarkMode: isDarkMode,
               ),
             ),
           ],
