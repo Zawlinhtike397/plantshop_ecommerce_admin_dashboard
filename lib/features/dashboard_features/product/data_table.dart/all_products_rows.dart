@@ -1,44 +1,71 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/bloc/product_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/model/plant_model.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/screen/edit_product_screen.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 
 class AllProductsRows extends DataTableSource {
-  final List<PlantModel> plants = [
-    PlantModel(
-      id: 1,
-      name: 'Jade Plant',
-      originalPrice: 3000,
-      height: '20cm',
-      category: 'Indoor Plant',
-      stock: 500,
-      maxStock: 1000,
-      restockedAt: DateTime(2024, 7, 30),
-      temperature: '20°C',
-      pot: 'Ceramic',
-      thumbnailImg:
-          'https://images.unsplash.com/photo-1459156212016-c812468e2115',
-      imageUrl: [],
-      description: 'Beautiful indoor plant',
-    ),
+  final BuildContext context;
+  final bool isDarkMode;
+  final List<PlantModel> plants;
 
-    PlantModel(
-      id: 2,
-      name: 'Cactus',
-      originalPrice: 3000,
-      height: '15cm',
-      category: 'Succulent Plant',
-      stock: 0,
-      maxStock: 1000,
-      restockedAt: DateTime(2024, 7, 30),
-      temperature: '30°C',
-      pot: 'Plastic',
-      thumbnailImg:
-          'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a',
-      imageUrl: [],
-      description: 'Easy to care cactus',
-    ),
-  ];
+  AllProductsRows({
+    required this.context,
+    required this.isDarkMode,
+    required this.plants,
+  });
+
+  void _showDeleteConfirmation(PlantModel plant) {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          backgroundColor: isDarkMode ? AppColor.dark2 : Colors.white,
+          title: Text(
+            'Confirm Deletion',
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge!.copyWith(fontSize: 18),
+          ),
+          content: Text(
+            'Are you sure you want to delete "${plant.name}"?\nThis action cannot be undone.',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+              child: Text(
+                'Cancel',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () {
+                context.read<ProductBloc>().add(DeleteProduct(plant.id));
+
+                Navigator.of(dialogContext).pop();
+              },
+              child: Text(
+                'Delete',
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall!.copyWith(color: AppColor.textWhite),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   String formatDate(DateTime? date) {
     if (date == null) return '-';
@@ -54,9 +81,9 @@ class AllProductsRows extends DataTableSource {
 
     return DataRow2(
       cells: [
-        /// NAME
         DataCell(
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
@@ -89,51 +116,105 @@ class AllProductsRows extends DataTableSource {
           ),
         ),
 
-        /// CATEGORY
-        DataCell(Text(plant.category)),
-
-        /// STOCK
-        DataCell(Text('${plant.stock}')),
-
-        /// DATE
-        DataCell(Text(formatDate(plant.restockedAt))),
-
-        /// PRICE
-        DataCell(Text('${plant.originalPrice.toInt()} MMK')),
-
-        /// STATUS
         DataCell(
-          Text(
-            outOfStock ? 'Out of Stock' : 'Active',
-            style: TextStyle(
-              color: outOfStock ? Colors.red : Colors.green,
-              fontWeight: FontWeight.w600,
+          Align(alignment: Alignment.center, child: Text(plant.category)),
+        ),
+
+        DataCell(
+          Align(alignment: Alignment.center, child: Text('${plant.stock}')),
+        ),
+
+        DataCell(
+          Align(
+            alignment: Alignment.center,
+            child: Text(formatDate(plant.restockedAt)),
+          ),
+        ),
+
+        DataCell(
+          Align(
+            alignment: Alignment.center,
+            child: Text('${plant.originalPrice.toInt()} MMK'),
+          ),
+        ),
+
+        DataCell(
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              outOfStock ? 'Out of Stock' : 'Active',
+              style: TextStyle(
+                color: outOfStock ? Colors.red : Colors.green,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),
 
-        /// ACTIONS
         DataCell(
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.edit_square, color: Color(0xFF3B82F6)),
+          Align(
+            alignment: Alignment.center,
+            child: PopupMenuButton<String>(
+              icon: Icon(
+                Icons.more_horiz,
+                color: isDarkMode ? Colors.white : Colors.black,
               ),
-
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.delete, color: Colors.red),
-              ),
-
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.ios_share_outlined,
-                  color: Colors.black87,
+              color: isDarkMode ? AppColor.dark2 : AppColor.white,
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+                side: BorderSide(
+                  color: isDarkMode
+                      ? AppColor.dark3
+                      : AppColor.borderColor.withValues(alpha: 0.5),
                 ),
               ),
-            ],
+              onSelected: (String value) {
+                if (value == 'edit') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditProductScreen(),
+                    ),
+                  );
+                } else if (value == 'delete') {
+                  _showDeleteConfirmation(plant);
+                } else if (value == 'export') {
+                  debugPrint('Export clicked for ${plant.name}');
+                }
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                PopupMenuItem<String>(
+                  value: 'edit',
+                  child: Text(
+                    'Edit',
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
+                ),
+                const PopupMenuDivider(height: 1),
+                PopupMenuItem<String>(
+                  value: 'delete',
+                  child: Text(
+                    'Delete',
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
+                ),
+                const PopupMenuDivider(height: 1),
+                PopupMenuItem<String>(
+                  value: 'export',
+                  child: Text(
+                    'Export CSV',
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],

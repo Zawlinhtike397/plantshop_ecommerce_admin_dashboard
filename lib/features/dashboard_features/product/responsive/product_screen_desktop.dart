@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/data_table.dart/all_products_data_table.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/model/plant_model.dart';
 
 class ProductScreenDesktop extends StatelessWidget {
   const ProductScreenDesktop({super.key});

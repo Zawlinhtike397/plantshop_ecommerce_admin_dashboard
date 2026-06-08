@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/utils/themes/cubit/theme_cubit.dart';
 
 class AlertSummaryBox extends StatelessWidget {
   final String title;

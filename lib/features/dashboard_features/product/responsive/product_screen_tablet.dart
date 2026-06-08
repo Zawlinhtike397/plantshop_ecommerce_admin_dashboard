@@ -1,10 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/data_table.dart/all_products_data_table.dart';
 
 class ProductScreenTablet extends StatelessWidget {
   const ProductScreenTablet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text('Product Screen')));
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Products',
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+            ),
+
+            const SizedBox(height: 24),
+
+            AllProductsDataTable(),
+          ],
+        ),
+      ),
+    );
   }
 }
