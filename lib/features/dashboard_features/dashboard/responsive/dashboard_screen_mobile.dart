@@ -31,7 +31,6 @@ class DashboardScreenMobile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 width: double.infinity,
-                height: 410,
                 child: LowStockAlertsSection(),
               ),
               TopCategoriesPieChart(),

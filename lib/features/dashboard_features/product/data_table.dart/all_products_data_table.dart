@@ -41,10 +41,8 @@ class AllProductsDataTable extends StatelessWidget {
               child: BlocBuilder<ProductBloc, ProductState>(
                 builder: (context, state) {
                   if (state is ProductLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: Color(0xFF198754),
-                      ),
+                    return Center(
+                      child: CircularProgressIndicator(color: AppColor.primary),
                     );
                   } else if (state is ProductError) {
                     return Center(

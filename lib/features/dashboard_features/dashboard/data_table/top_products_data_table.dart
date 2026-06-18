@@ -26,10 +26,9 @@ class TopProductsDataTable extends StatelessWidget {
         children: [
           Text(
             'Top Selling Products',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: isDarkMode ? Colors.white : Colors.black87,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
 
           const SizedBox(height: 24),

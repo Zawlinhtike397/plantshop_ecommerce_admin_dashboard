@@ -37,7 +37,7 @@ class DashboardScreenTablet extends StatelessWidget {
                       ),
 
                       width: double.infinity,
-                      height: 410,
+                      height: 480,
                       child: LowStockAlertsSection(),
                     ),
                   ),

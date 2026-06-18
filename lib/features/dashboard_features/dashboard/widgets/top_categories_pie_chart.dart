@@ -49,7 +49,7 @@ class TopCategoriesPieChart extends StatelessWidget {
                 'Top Selling Categories',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: isDarkMode ? Colors.white : Colors.black87,
+                  fontSize: 18,
                 ),
               ),
 

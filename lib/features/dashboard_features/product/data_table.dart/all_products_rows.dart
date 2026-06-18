@@ -6,6 +6,8 @@ import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/p
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/model/plant_model.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/screen/edit_product_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/services/csv_export_services.dart';
+import 'package:toastification/toastification.dart';
 
 class AllProductsRows extends DataTableSource {
   final BuildContext context;
@@ -169,7 +171,7 @@ class AllProductsRows extends DataTableSource {
                       : AppColor.borderColor.withValues(alpha: 0.5),
                 ),
               ),
-              onSelected: (String value) {
+              onSelected: (String value) async {
                 if (value == 'edit') {
                   Navigator.push(
                     context,
@@ -180,8 +182,83 @@ class AllProductsRows extends DataTableSource {
                 } else if (value == 'delete') {
                   _showDeleteConfirmation(plant);
                 } else if (value == 'export') {
-                  debugPrint('Export clicked for ${plant.name}');
+                  try {
+                    await CsvExportService.exportSinglePlant(plant);
+                    if (context.mounted) {
+                      toastification.show(
+                        context: context,
+                        type: ToastificationType.success,
+                        style: ToastificationStyle.flatColored,
+                        title: Text('Export Complete'),
+                        description: Text('${plant.name} data downloaded.'),
+                        alignment: Alignment.bottomCenter,
+                        autoCloseDuration: const Duration(seconds: 3),
+                      );
+                    }
+                  } catch (e) {
+                    if (context.mounted) {
+                      toastification.show(
+                        context: context,
+                        type: ToastificationType.error,
+                        title: Text('Export Failed'),
+                        alignment: Alignment.topRight,
+                      );
+                    }
+                  }
                 }
+                // else if (value == 'export') {
+                //   try {
+                //     ScaffoldMessenger.of(context).showSnackBar(
+                //       SnackBar(
+                //         content: Row(
+                //           children: [
+                //             const SizedBox(
+                //               width: 16,
+                //               height: 16,
+                //               child: CircularProgressIndicator(
+                //                 color: Colors.white,
+                //                 strokeWidth: 2,
+                //               ),
+                //             ),
+                //             const SizedBox(width: 12),
+                //             Expanded(
+                //               child: Text(
+                //                 'Preparing export for ${plant.name}...',
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //         behavior: SnackBarBehavior.floating,
+                //         width: 340,
+                //         duration: const Duration(seconds: 1),
+                //       ),
+                //     );
+
+                //     await CsvExportService.exportSinglePlant(plant);
+
+                //     if (context.mounted) {
+                //       ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                //       ScaffoldMessenger.of(context).showSnackBar(
+                //         const SnackBar(
+                //           content: Text('CSV Exported Successfully!'),
+                //           backgroundColor: AppColor.primary,
+                //         ),
+                //       );
+                //     }
+                //   } catch (e) {
+                //     if (context.mounted) {
+                //       ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                //       ScaffoldMessenger.of(context).showSnackBar(
+                //         SnackBar(
+                //           content: Text('Failed to export: $e'),
+                //           backgroundColor: Colors.red,
+                //           behavior: SnackBarBehavior.floating,
+                //           width: 340,
+                //         ),
+                //       );
+                //     }
+                //   }
+                // }
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                 PopupMenuItem<String>(

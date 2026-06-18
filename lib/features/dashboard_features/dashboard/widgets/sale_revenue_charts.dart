@@ -1,11 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/model/revenue_data_model.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/model/order_model.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/services/revenue_services.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/utils/themes/cubit/theme_cubit.dart';
 
 class SalesRevenueChart extends StatefulWidget {
   final List<OrderModel> orders;
@@ -86,7 +84,7 @@ class _SalesRevenueChartState extends State<SalesRevenueChart> {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.symmetric(vertical: 44, horizontal: 24),
       decoration: BoxDecoration(
         color: isDarkMode
             ? AppColor.dark1
@@ -103,9 +101,10 @@ class _SalesRevenueChartState extends State<SalesRevenueChart> {
             children: [
               Text(
                 'Sales Revenue',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -131,7 +130,7 @@ class _SalesRevenueChartState extends State<SalesRevenueChart> {
             ],
           ),
           SizedBox(
-            height: 290,
+            height: 320,
             child: LayoutBuilder(
               builder: (context, constraints) {
                 final double chartCalculatedWidth = revenueData.length * 70;

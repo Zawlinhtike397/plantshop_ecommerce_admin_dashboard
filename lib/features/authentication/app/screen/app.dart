@@ -5,6 +5,7 @@ import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/b
 import 'package:plantfiy_plantshop_admin_dashboard/routes/app_router.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/themes/app_theme.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/themes/cubit/theme_cubit.dart';
+import 'package:toastification/toastification.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -26,31 +27,33 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
-        return MaterialApp.router(
-          themeMode: state.autoDarkModeOption == 'System Setting'
-              ? ThemeMode.system
-              : (state.isDarkMode ? ThemeMode.dark : ThemeMode.light),
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          routerConfig: router,
-          builder: (context, child) {
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<AppBloc, AppState>(
-                  listener: (context, state) {
-                    if (state is AppUnauthorized) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Access denied. Admins only.'),
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ],
-              child: child!,
-            );
-          },
+        return ToastificationWrapper(
+          child: MaterialApp.router(
+            themeMode: state.autoDarkModeOption == 'System Setting'
+                ? ThemeMode.system
+                : (state.isDarkMode ? ThemeMode.dark : ThemeMode.light),
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            routerConfig: router,
+            builder: (context, child) {
+              return MultiBlocListener(
+                listeners: [
+                  BlocListener<AppBloc, AppState>(
+                    listener: (context, state) {
+                      if (state is AppUnauthorized) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Access denied. Admins only.'),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ],
+                child: child!,
+              );
+            },
+          ),
         );
       },
     );

@@ -41,7 +41,7 @@ class TableActionHeader extends StatelessWidget {
     }) {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF198754),
+          backgroundColor: AppColor.buttonPrimary,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           padding: padding,
         ),

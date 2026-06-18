@@ -28,21 +28,27 @@ class DashboardScreenDesktop extends StatelessWidget {
               Row(
                 spacing: 15.0,
                 children: [
-                  Expanded(child: RevenueChartSection()),
+                  Expanded(
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 480,
+                      child: RevenueChartSection(),
+                    ),
+                  ),
                   Expanded(
                     // flex: 2,
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-
                       width: double.infinity,
-                      height: 410,
+                      height: 480,
                       child: LowStockAlertsSection(),
                     ),
                   ),
                 ],
               ),
+
               Row(
                 spacing: 15.0,
                 crossAxisAlignment: CrossAxisAlignment.start,

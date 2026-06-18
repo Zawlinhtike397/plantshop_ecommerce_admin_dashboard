@@ -10,15 +10,13 @@ class ProductRepository {
         .select()
         .order('name', ascending: true);
 
-    return (response as List).map((e) => PlantModel.fromJson(e)).toList();
+    // return (response as List).map((e) => PlantModel.fromJson(e)).toList();
+    return response.map((e) => PlantModel.fromJson(e)).toList();
   }
 
   Future<void> deleteProduct(int id) async {
     try {
-      await supabase
-          .from('plants') // Replace with your actual table name
-          .delete()
-          .eq('id', id);
+      await supabase.from('plants').delete().eq('id', id);
     } catch (e) {
       throw Exception('Failed to delete product from database: $e');
     }
