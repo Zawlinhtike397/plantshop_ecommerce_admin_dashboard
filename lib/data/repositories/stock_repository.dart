@@ -36,7 +36,7 @@ class StockRepository {
   }
 
   Future<void> reorderPlant({
-    required int plantId,
+    required String plantId,
     required int currentStock,
     required int maxStock,
   }) async {

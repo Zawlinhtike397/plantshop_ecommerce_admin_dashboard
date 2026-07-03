@@ -1,10 +1,11 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/bloc/product_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/model/plant_model.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/screen/edit_product_screen.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/routes/app_routes.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/services/csv_export_services.dart';
 import 'package:toastification/toastification.dart';
@@ -173,12 +174,7 @@ class AllProductsRows extends DataTableSource {
               ),
               onSelected: (String value) async {
                 if (value == 'edit') {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditProductScreen(),
-                    ),
-                  );
+                  context.go(AppRoutes.editProduct);
                 } else if (value == 'delete') {
                   _showDeleteConfirmation(plant);
                 } else if (value == 'export') {

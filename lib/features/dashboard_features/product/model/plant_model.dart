@@ -1,7 +1,7 @@
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/model/care_guide_model.dart';
 
 class PlantModel {
-  int id;
+  String id;
   String name;
   double originalPrice;
   String height;
@@ -9,7 +9,7 @@ class PlantModel {
   int stock;
   int maxStock;
   DateTime? restockedAt;
-  String temperature;
+  List<int> temperature;
   String pot;
   String thumbnailImg;
   List<String> imageUrl;
@@ -34,7 +34,7 @@ class PlantModel {
   });
 
   static PlantModel empty() => PlantModel(
-    id: 0,
+    id: '',
     name: '',
     originalPrice: 0.0,
     height: '',
@@ -42,7 +42,7 @@ class PlantModel {
     stock: 3,
     maxStock: 50,
     restockedAt: null,
-    temperature: '',
+    temperature: [],
     pot: '',
     thumbnailImg: '',
     imageUrl: [],
@@ -88,7 +88,7 @@ class PlantModel {
     }
 
     return PlantModel(
-      id: (json['id'] as num?)?.toInt() ?? 0,
+      id: json['id']?.toString() ?? '',
       name: json['name']?.toString() ?? '',
       originalPrice: (json['price'] ?? 0).toDouble() ?? 0.0,
       height: json['height']?.toString() ?? '',
@@ -98,7 +98,11 @@ class PlantModel {
       restockedAt: json['lastRestockedAt'] != null
           ? DateTime.parse(json['lastRestockedAt'])
           : null,
-      temperature: json['temperature']?.toString() ?? '',
+      temperature:
+          (json['temperature'] as List)
+              .map((e) => int.tryParse(e.toString()) ?? 0)
+              .toList() ??
+          <int>[],
       pot: json['pot']?.toString() ?? '',
       thumbnailImg: json['thumbnailImg']?.toString() ?? '',
       imageUrl: json['imageUrl'] != null

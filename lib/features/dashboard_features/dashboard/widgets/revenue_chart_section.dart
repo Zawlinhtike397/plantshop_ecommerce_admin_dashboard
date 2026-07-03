@@ -15,7 +15,36 @@ class RevenueChartSection extends StatelessWidget {
         }
 
         if (state is OrderLoaded) {
+          if (state.orders.isEmpty) {
+            SalesRevenueChart(orders: []);
+          }
           return SalesRevenueChart(orders: state.orders);
+        }
+
+        if (state is OrderError) {
+          return SizedBox(
+            height: 350,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Failed to load chart data',
+                    style: TextStyle(color: Colors.red.shade400, fontSize: 16),
+                  ),
+
+                  const SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<OrderBloc>().add(FetchOrders());
+                      print(state.message);
+                    },
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            ),
+          );
         }
 
         return const SizedBox();

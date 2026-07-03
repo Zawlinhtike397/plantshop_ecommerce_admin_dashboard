@@ -1,12 +1,14 @@
 class AppRoutes {
-  static const String loginPath = '/login';
-  static const String dashboardPath = '/dashboard';
-  static const String productsPath = '/products';
-  static const String ordersPath = '/orders';
-  static const String customersPath = '/customers';
-  static const String discountCuponsPath = '/discounts';
-  static const String categoriesPath = '/categories';
-  static const String settingsPath = '/settings';
+  static const String login = '/login';
+  static const String dashboard = '/dashboard';
+  static const String products = '/products';
+  static const String orders = '/orders';
+  static const String customers = '/customers';
+  static const String discountCupons = '/discounts';
+  static const String categories = '/categories';
+  static const String settings = '/settings';
   static const String logout = '/logout';
-  static const String profilePath = '/profile';
+  static const String profile = '/profile';
+  static const String addProduct = '/addProduct';
+  static const String editProduct = '/editProduct';
 }

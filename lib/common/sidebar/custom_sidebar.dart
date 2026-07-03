@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/common/dropdown/custom_dropdown.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/common/images/custom_circular_image.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/common/sidebar/menu_item.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/routes/app_routes.dart';
@@ -82,32 +83,32 @@ class _ZSideBarState extends State<ZSideBar> {
                             SizedBox(height: 0.5),
                             ZMenuItem(
                               itemName: 'Dashboard',
-                              route: AppRoutes.dashboardPath,
+                              route: AppRoutes.dashboard,
                               iconPath: ImageStrings.dashboardIcon,
                             ),
                             ZMenuItem(
                               itemName: 'Products',
-                              route: AppRoutes.productsPath,
+                              route: AppRoutes.products,
                               iconPath: ImageStrings.productIcon,
                             ),
                             ZMenuItem(
                               itemName: 'Orders',
-                              route: AppRoutes.ordersPath,
+                              route: AppRoutes.orders,
                               iconPath: ImageStrings.orderIcon,
                             ),
                             ZMenuItem(
                               itemName: 'Customers',
-                              route: AppRoutes.customersPath,
+                              route: AppRoutes.customers,
                               iconPath: ImageStrings.customerIcon,
                             ),
                             ZMenuItem(
                               itemName: 'Discount Cupons',
-                              route: AppRoutes.discountCuponsPath,
+                              route: AppRoutes.discountCupons,
                               iconPath: ImageStrings.discountCuponIcon,
                             ),
                             ZMenuItem(
                               itemName: 'Categories',
-                              route: AppRoutes.categoriesPath,
+                              route: AppRoutes.categories,
                               iconPath: ImageStrings.categoryIcon,
                             ),
                             SizedBox(height: 9.0),
@@ -124,7 +125,7 @@ class _ZSideBarState extends State<ZSideBar> {
                             SizedBox(height: 0.5),
                             ZMenuItem(
                               itemName: 'Settings',
-                              route: AppRoutes.settingsPath,
+                              route: AppRoutes.settings,
                               iconPath: ImageStrings.settingsIcon,
                             ),
                             Padding(
@@ -213,7 +214,6 @@ class _ZSideBarState extends State<ZSideBar> {
                                     width: double.infinity,
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 10.0,
-                                      vertical: 6.0,
                                     ),
                                     decoration: BoxDecoration(
                                       color: isDarkMode
@@ -221,46 +221,19 @@ class _ZSideBarState extends State<ZSideBar> {
                                           : Colors.grey.shade200,
                                       borderRadius: BorderRadius.circular(6.0),
                                     ),
-                                    child: DropdownButtonHideUnderline(
-                                      child: DropdownButton<String>(
-                                        value: themeState.autoDarkModeOption,
-                                        dropdownColor: isDarkMode
-                                            ? AppColor.dark1
-                                            : AppColor.sidebarBackground,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                              color: isDarkMode
-                                                  ? Colors.white
-                                                  : Colors.black,
-                                              fontSize: 13,
-                                            ),
-                                        icon: const Icon(
-                                          Icons.arrow_drop_down,
-                                          size: 20,
-                                        ),
-                                        isDense: true,
-                                        items: const [
-                                          DropdownMenuItem(
-                                            value: 'Off',
-                                            child: Text('Off'),
-                                          ),
-                                          DropdownMenuItem(
-                                            value: 'System Setting',
-                                            child: Text('System Setting'),
-                                          ),
-                                        ],
-                                        onChanged: (String? newValue) {
-                                          if (newValue != null) {
-                                            context
-                                                .read<ThemeCubit>()
-                                                .updateAutoDarkModeOption(
-                                                  newValue,
-                                                );
-                                          }
-                                        },
-                                      ),
+                                    child: CustomDropdown(
+                                      isDarkMode: isDarkMode,
+                                      value: themeState.autoDarkModeOption,
+                                      itemsValue: ['Off', 'System Setting'],
+                                      onChanged: (String? newValue) {
+                                        if (newValue != null) {
+                                          context
+                                              .read<ThemeCubit>()
+                                              .updateAutoDarkModeOption(
+                                                newValue,
+                                              );
+                                        }
+                                      },
                                     ),
                                   ),
                                 ],
@@ -285,11 +258,11 @@ class _ZSideBarState extends State<ZSideBar> {
                                 ),
 
                                 Link(
-                                  uri: Uri.parse(AppRoutes.profilePath),
+                                  uri: Uri.parse(AppRoutes.profile),
                                   builder: (context, followLink) => InkWell(
                                     onTap: () {
                                       followLink?.call();
-                                      context.go(AppRoutes.profilePath);
+                                      context.go(AppRoutes.profile);
                                     },
                                     child: Text(
                                       'Plantify Admin',

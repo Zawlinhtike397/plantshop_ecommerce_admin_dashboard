@@ -61,7 +61,6 @@ class TopProductsDataTable extends StatelessWidget {
                   height: 410,
                   child: AppPaginatedDataTable(
                     minWidth: 700,
-                    // tableHeight: 420,
                     rowsPerPage: 5,
                     isDarkMode: isDarkMode,
                     columns: const [
@@ -92,7 +91,7 @@ class TopProductsDataTable extends StatelessWidget {
                       ),
                       DataColumn2(label: Text('Sale Revenues')),
                     ],
-                    // Earnings
+
                     source: TopProductsRows(
                       products: productStats,
                       isDarkMode: isDarkMode,

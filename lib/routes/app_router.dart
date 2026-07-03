@@ -8,6 +8,8 @@ import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/c
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/screen/dashboard_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/discount/screen/discount_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/screen/order_screen.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/screen/add_product_screen.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/screen/edit_product_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/screen/product_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/profile/screen/profile_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/settings/screen/setting_screen.dart';
@@ -21,13 +23,13 @@ class AppRouter {
 
   static GoRouter createRouter(AppBloc appBloc) {
     return GoRouter(
-      initialLocation: AppRoutes.loginPath,
+      initialLocation: AppRoutes.login,
       //  '/login',
       refreshListenable: GoRouterRefreshStream(appBloc.stream),
       routes: [
         GoRoute(
           // name: AppRoutes.login,
-          path: AppRoutes.loginPath,
+          path: AppRoutes.login,
           builder: (context, state) => LoginScreen(),
         ),
         ShellRoute(
@@ -37,42 +39,50 @@ class AppRouter {
           routes: [
             GoRoute(
               // name: AppRoutes.dashboard,
-              path: AppRoutes.dashboardPath,
+              path: AppRoutes.dashboard,
               builder: (context, state) => const DashboardScreen(),
             ),
             GoRoute(
               // name: AppRoutes.products,
-              path: AppRoutes.productsPath,
+              path: AppRoutes.products,
               builder: (context, state) => const ProductScreen(),
             ),
             GoRoute(
               // name: AppRoutes.orders,
-              path: AppRoutes.ordersPath,
+              path: AppRoutes.orders,
               builder: (context, state) => const OrderScreen(),
             ),
             GoRoute(
               // name: AppRoutes.customers,
-              path: AppRoutes.customersPath,
+              path: AppRoutes.customers,
               builder: (context, state) => const CustomerScreen(),
             ),
             GoRoute(
               // name: AppRoutes.discountCupons,
-              path: AppRoutes.discountCuponsPath,
+              path: AppRoutes.discountCupons,
               builder: (context, state) => const DiscountScreen(),
             ),
             GoRoute(
               // name: AppRoutes.categories,
-              path: AppRoutes.categoriesPath,
+              path: AppRoutes.categories,
               builder: (context, state) => const CategoriesScreen(),
             ),
             GoRoute(
               // name: AppRoutes.categories,
-              path: AppRoutes.settingsPath,
+              path: AppRoutes.settings,
               builder: (context, state) => const SettingScreen(),
             ),
             GoRoute(
-              path: AppRoutes.profilePath,
+              path: AppRoutes.profile,
               builder: (context, state) => ProfileScreen(),
+            ),
+            GoRoute(
+              path: AppRoutes.addProduct,
+              builder: (context, state) => AddProductScreen(),
+            ),
+            GoRoute(
+              path: AppRoutes.editProduct,
+              builder: (context, state) => EditProductScreen(),
             ),
           ],
         ),
@@ -81,19 +91,19 @@ class AppRouter {
         final appState = context.read<AppBloc>().state;
         // appBloc.state;
 
-        final isLoggingIn = state.uri.path == AppRoutes.loginPath;
+        final isLoggingIn = state.uri.path == AppRoutes.login;
         // '/login';
 
         if (appState is AppUnauthenticated) {
-          return isLoggingIn ? null : AppRoutes.loginPath;
+          return isLoggingIn ? null : AppRoutes.login;
         }
 
         if (appState is AppUnauthorized) {
-          return AppRoutes.loginPath;
+          return AppRoutes.login;
         }
 
         if (appState is AppAuthenticated) {
-          return isLoggingIn ? AppRoutes.dashboardPath : null;
+          return isLoggingIn ? AppRoutes.dashboard : null;
         }
         return null;
       },

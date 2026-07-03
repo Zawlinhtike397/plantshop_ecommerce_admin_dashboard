@@ -80,7 +80,7 @@ class LowStockCard extends StatelessWidget {
               onPressed: () {
                 context.read<StockBloc>().add(
                   ReorderPlant(
-                    plantId: int.parse(item.productId),
+                    plantId: item.productId,
                     currentStock: item.currentStock,
                     maxStock: item.maxStock,
                   ),

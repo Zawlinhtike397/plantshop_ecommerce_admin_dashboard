@@ -57,4 +57,42 @@ class Validator {
 
     return null;
   }
+
+  static String? validateMinTemperature(String? minValue, String maxValue) {
+    if (minValue == null || minValue.isEmpty) {
+      return 'Min temperature is required';
+    }
+
+    final minTemp = int.tryParse(minValue);
+    if (minTemp == null) {
+      return 'Must be a valid number.';
+    }
+
+    if (maxValue.isNotEmpty) {
+      final maxTemp = int.tryParse(maxValue);
+      if (maxTemp != null && minTemp > maxTemp) {
+        return 'Min temperature cannot be greater than Max temperature.';
+      }
+    }
+    return null;
+  }
+
+  static String? validateMaxTemperature(String minValue, String? maxValue) {
+    if (maxValue == null || maxValue.isEmpty) {
+      return 'Max temperature is required';
+    }
+
+    final maxTemp = int.tryParse(maxValue);
+    if (maxTemp == null) {
+      return 'Must be a valid number.';
+    }
+
+    if (minValue.isNotEmpty) {
+      final minTemp = int.tryParse(minValue);
+      if (minTemp != null && minTemp > maxTemp) {
+        return 'Max temperature cannot be less than Min temperature.';
+      }
+    }
+    return null;
+  }
 }

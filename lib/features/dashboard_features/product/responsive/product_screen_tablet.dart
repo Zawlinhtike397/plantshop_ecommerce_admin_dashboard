@@ -14,9 +14,10 @@ class ProductScreenTablet extends StatelessWidget {
           children: [
             Text(
               'Products',
-              style: Theme.of(
-                context,
-              ).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
 
             const SizedBox(height: 24),

@@ -10,7 +10,7 @@ sealed class StockEvent extends Equatable {
 class FetchLowStockItems extends StockEvent {}
 
 class ReorderPlant extends StockEvent {
-  final int plantId;
+  final String plantId;
   final int currentStock;
   final int maxStock;
 

@@ -18,8 +18,16 @@ class SearchProducts extends ProductEvent {
   List<Object> get props => [query];
 }
 
+class AddNewProduct extends ProductEvent {
+  final PlantModel plant;
+  const AddNewProduct(this.plant);
+
+  @override
+  List<Object> get props => [plant];
+}
+
 class DeleteProduct extends ProductEvent {
-  final int plantId;
+  final String plantId;
 
   const DeleteProduct(this.plantId);
 

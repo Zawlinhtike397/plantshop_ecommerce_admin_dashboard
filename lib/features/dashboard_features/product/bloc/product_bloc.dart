@@ -11,6 +11,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ProductBloc({required this.repository}) : super(ProductInitial()) {
     on<FetchAllProducts>(_fetchAllProducts);
     on<SearchProducts>(_searchProducts);
+    on<AddNewProduct>(_addNewProduct);
     on<DeleteProduct>(_deleteProduct);
   }
 
@@ -45,6 +46,21 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           filteredProducts: filtered,
         ),
       );
+    }
+  }
+
+  Future<void> _addNewProduct(
+    AddNewProduct event,
+    Emitter<ProductState> emit,
+  ) async {
+    try {
+      emit(ProductLoading());
+      await repository.addProduct(event.plant);
+      emit(ProductActionSuccess("Product added successfully!"));
+      add(FetchAllProducts());
+    } catch (e) {
+      emit(ProductError(e.toString()));
+      add(FetchAllProducts());
     }
   }
 

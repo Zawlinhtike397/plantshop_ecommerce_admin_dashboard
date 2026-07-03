@@ -12,7 +12,7 @@ sealed class SidebarState extends Equatable {
 
 final class SidebarInitial extends SidebarState {
   const SidebarInitial()
-    : super(activeItem: AppRoutes.dashboardPath, hoverItem: '');
+    : super(activeItem: AppRoutes.dashboard, hoverItem: '');
 }
 
 final class SidebarUpdated extends SidebarState {

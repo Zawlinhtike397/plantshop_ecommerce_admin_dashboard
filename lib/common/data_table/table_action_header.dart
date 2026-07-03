@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/screen/add_product_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/routes/app_routes.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 
 class TableActionHeader extends StatelessWidget {
@@ -46,10 +47,7 @@ class TableActionHeader extends StatelessWidget {
           padding: padding,
         ),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddProductScreen()),
-          );
+          context.go(AppRoutes.addProduct);
         },
         child: Text(text, style: const TextStyle(color: Colors.white)),
       );

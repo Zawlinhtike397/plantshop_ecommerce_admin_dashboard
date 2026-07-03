@@ -22,6 +22,7 @@ class DashboardScreenMobile extends StatelessWidget {
                 'Dashboard',
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   fontWeight: FontWeight.bold,
+                  fontSize: 20,
                 ),
               ),
               OverallDataGrid(),

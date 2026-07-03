@@ -24,6 +24,14 @@ class ProductLoaded extends ProductState {
   List<Object> get props => [allProducts, filteredProducts];
 }
 
+class ProductActionSuccess extends ProductState {
+  final String message;
+  const ProductActionSuccess(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
 class ProductError extends ProductState {
   final String message;
 

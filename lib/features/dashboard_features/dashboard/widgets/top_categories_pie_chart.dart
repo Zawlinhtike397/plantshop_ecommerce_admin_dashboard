@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/widgets/category_row.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/bloc/order_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/image_strings.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/popups/animation_loader.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/services/dashboard_analytics_services.dart';
 
 class TopCategoriesPieChart extends StatelessWidget {
@@ -36,6 +38,8 @@ class TopCategoriesPieChart extends StatelessWidget {
           (sum, item) => sum + item.totalSales,
         );
 
+        final hasData = categories.isNotEmpty && totalSales > 0;
+
         return Container(
           padding: const EdgeInsets.all(24.0),
           decoration: BoxDecoration(
@@ -57,25 +61,40 @@ class TopCategoriesPieChart extends StatelessWidget {
 
               SizedBox(
                 height: 180,
-                child: PieChart(
-                  PieChartData(
-                    sectionsSpace: 0,
-                    centerSpaceRadius: 50,
-                    startDegreeOffset: -90,
-                    sections: categories.map((category) {
-                      final percentage =
-                          (category.totalSales / totalSales) * 100;
+                child: hasData
+                    ? PieChart(
+                        PieChartData(
+                          sectionsSpace: 0,
+                          centerSpaceRadius: 50,
+                          startDegreeOffset: -90,
+                          sections: categories.map((category) {
+                            final percentage =
+                                (category.totalSales / totalSales) * 100;
 
-                      return PieChartSectionData(
-                        color: category.color,
-                        value: percentage,
-                        radius: 60,
-                        showTitle: true,
-                        title: '${percentage.toStringAsFixed(0)} %',
-                      );
-                    }).toList(),
-                  ),
-                ),
+                            return PieChartSectionData(
+                              color: category.color,
+                              value: percentage,
+                              radius: 60,
+                              showTitle: true,
+                              title: '${percentage.toStringAsFixed(0)} %',
+                            );
+                          }).toList(),
+                        ),
+                      )
+                    : AnimationLoader(
+                        text: 'No stock',
+                        animation: ImageStrings.emptyAnimation,
+                        width: 200,
+                        height: 100,
+                      ),
+                //  Center(
+                //     child: Text(
+                //       'No stock',
+                //       style: Theme.of(
+                //         context,
+                //       ).textTheme.titleMedium?.copyWith(color: Colors.grey),
+                //     ),
+                //   ),
               ),
 
               const SizedBox(height: 60),
