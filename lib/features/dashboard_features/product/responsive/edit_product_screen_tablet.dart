@@ -117,9 +117,10 @@ class EditProductScreenTablet extends StatelessWidget {
                                           : () {
                                               if (formKey.currentState!
                                                   .validate()) {
-                                                providerState.submitProduct(
-                                                  context,
-                                                );
+                                                providerState
+                                                    .submitEditedProduct(
+                                                      context,
+                                                    );
                                               }
                                             },
                                       child: Text(

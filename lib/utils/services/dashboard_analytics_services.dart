@@ -57,7 +57,7 @@ class DashboardAnalyticsService {
   static List<ProductAnalyticModel> generateTopProducts(
     List<OrderItemModel> items,
   ) {
-    final Map<int, ProductAnalyticModel> map = {};
+    final Map<String, ProductAnalyticModel> map = {};
 
     for (final item in items) {
       if (item.plant == null) continue;

@@ -5,6 +5,7 @@ import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/s
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/widgets/alert_summary_box.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/widgets/low_stock_card.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/enums.dart';
 
 class LowStockAlertsSection extends StatefulWidget {
   const LowStockAlertsSection({super.key});
@@ -14,7 +15,7 @@ class LowStockAlertsSection extends StatefulWidget {
 }
 
 class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
-  String selectedFilter = 'Out of Stock';
+  PlantDisplayStatus selectedFilter = PlantDisplayStatus.outOfStock;
 
   List<LowStockItem> _filter(List<LowStockItem> items) {
     return items.where((e) => e.status == selectedFilter).toList();
@@ -42,31 +43,33 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
         final filteredItems = _filter(items);
 
         final criticalCount = items
-            .where((item) => item.status == "Out of Stock")
+            .where((item) => item.status == PlantDisplayStatus.outOfStock)
             .length;
 
-        final lowCount = items.where((item) => item.status == "Low").length;
+        final lowCount = items
+            .where((item) => item.status == PlantDisplayStatus.low)
+            .length;
 
         final warningCount = items
-            .where((item) => item.status == "Warning")
+            .where((item) => item.status == PlantDisplayStatus.warning)
             .length;
 
         Color activeFilterColor;
         int activeFilterCount;
 
         switch (selectedFilter) {
-          case 'Out of Stock':
+          case PlantDisplayStatus.outOfStock:
             activeFilterCount = criticalCount;
-            activeFilterColor = AppColor.criticalStockColor;
+            activeFilterColor = PlantDisplayStatus.outOfStock.color;
             break;
-          case 'Low':
+          case PlantDisplayStatus.low:
             activeFilterCount = lowCount;
-            activeFilterColor = AppColor.lowStockColor;
+            activeFilterColor = PlantDisplayStatus.low.color;
             break;
-          case 'Warning':
+          case PlantDisplayStatus.warning:
           default:
             activeFilterCount = warningCount;
-            activeFilterColor = AppColor.warningStockColor;
+            activeFilterColor = PlantDisplayStatus.warning.color;
             break;
         }
 
@@ -119,13 +122,16 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
                               SizedBox(
                                 width: itemWidth,
                                 child: AlertSummaryBox(
-                                  title: "Out of Stock",
+                                  title: PlantDisplayStatus.outOfStock.label,
                                   count: criticalCount,
-                                  color: AppColor.criticalStockColor,
-                                  isSelected: selectedFilter == "Out of Stock",
+                                  color: PlantDisplayStatus.outOfStock.color,
+                                  isSelected:
+                                      selectedFilter ==
+                                      PlantDisplayStatus.outOfStock,
                                   onTap: () {
                                     setState(() {
-                                      selectedFilter = "Out of Stock";
+                                      selectedFilter =
+                                          PlantDisplayStatus.outOfStock;
                                     });
                                   },
                                 ),
@@ -134,13 +140,14 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
                               SizedBox(
                                 width: itemWidth,
                                 child: AlertSummaryBox(
-                                  title: "Low",
+                                  title: PlantDisplayStatus.low.label,
                                   count: lowCount,
-                                  color: AppColor.lowStockColor,
-                                  isSelected: selectedFilter == "Low",
+                                  color: PlantDisplayStatus.low.color,
+                                  isSelected:
+                                      selectedFilter == PlantDisplayStatus.low,
                                   onTap: () {
                                     setState(() {
-                                      selectedFilter = "Low";
+                                      selectedFilter = PlantDisplayStatus.low;
                                     });
                                   },
                                   //  Colors.orange,
@@ -150,13 +157,16 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
                               SizedBox(
                                 width: itemWidth,
                                 child: AlertSummaryBox(
-                                  title: "Warning",
+                                  title: PlantDisplayStatus.warning.label,
                                   count: warningCount,
-                                  color: AppColor.warningStockColor,
-                                  isSelected: selectedFilter == "Warning",
+                                  color: PlantDisplayStatus.warning.color,
+                                  isSelected:
+                                      selectedFilter ==
+                                      PlantDisplayStatus.warning,
                                   onTap: () {
                                     setState(() {
-                                      selectedFilter = "Warning";
+                                      selectedFilter =
+                                          PlantDisplayStatus.warning;
                                     });
                                   },
                                   //  Colors.amber,
@@ -172,7 +182,7 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "$selectedFilter : $activeFilterCount",
+                            "${selectedFilter.label} : $activeFilterCount",
                             style: Theme.of(context).textTheme.bodyLarge!
                                 .copyWith(
                                   color: activeFilterColor,
@@ -210,20 +220,6 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
                               padding: const EdgeInsets.only(bottom: 16),
                               child: LowStockCard(item: filteredItems.first),
                             ),
-
-                      // ListView.builder(
-                      //     shrinkWrap: true,
-                      //     physics: NeverScrollableScrollPhysics(),
-                      //     itemCount: filteredItems.length,
-                      //     itemBuilder: (context, index) {
-                      //       return Padding(
-                      //         padding: const EdgeInsets.only(bottom: 16),
-                      //         child: LowStockCard(
-                      //           item: filteredItems[index],
-                      //         ),
-                      //       );
-                      //     },
-                      //   ),
                     ],
                   ),
                 ),

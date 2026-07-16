@@ -31,6 +31,10 @@ class ProductMediaWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final providerState = context.watch<ProductProvider>();
+    final bool hasThumbnail =
+        providerState.thumbnailBytes != null ||
+        (providerState.thumbnailWebUrl != null &&
+            providerState.thumbnailWebUrl!.startsWith('http'));
 
     return Container(
       decoration: BoxDecoration(
@@ -52,9 +56,9 @@ class ProductMediaWidget extends StatelessWidget {
           ),
           ProductMediaCard(
             titleText: 'Thumbnail Image',
-            buttonText: providerState.thumbnailBytes == null
-                ? 'Add thumbnail image'
-                : 'Change thumbnail image',
+            buttonText: hasThumbnail
+                ? 'Change thumbnail image'
+                : 'Add thumbnail image',
             isMultiImage: false,
           ),
           ProductMediaCard(

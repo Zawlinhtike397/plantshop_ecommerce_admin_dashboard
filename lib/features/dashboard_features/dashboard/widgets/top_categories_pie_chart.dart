@@ -87,14 +87,6 @@ class TopCategoriesPieChart extends StatelessWidget {
                         width: 200,
                         height: 100,
                       ),
-                //  Center(
-                //     child: Text(
-                //       'No stock',
-                //       style: Theme.of(
-                //         context,
-                //       ).textTheme.titleMedium?.copyWith(color: Colors.grey),
-                //     ),
-                //   ),
               ),
 
               const SizedBox(height: 60),

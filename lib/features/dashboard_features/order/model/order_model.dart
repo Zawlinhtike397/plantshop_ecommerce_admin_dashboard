@@ -51,10 +51,11 @@ class OrderModel {
       userId: json['user_id']?.toString() ?? '',
       addressId: json['address_id']?.toString() ?? '',
       paymentMethod: json['payment_method']?.toString() ?? '',
-      totalAmount: (json['total'] as num).toDouble() ?? 0.0,
-      subTotal: (json['subtotal'] as num?)?.toDouble() ?? 0.0,
-      discount: (json['discount'] as num?)?.toDouble() ?? 0.0,
-      deliveryFee: (json['delivery_fee'] as num?)?.toDouble() ?? 0.0,
+      totalAmount: double.tryParse(json['total']?.toString() ?? '0.0') ?? 0.0,
+      subTotal: double.tryParse(json['subtotal']?.toString() ?? '0.0') ?? 0.0,
+      discount: double.tryParse(json['discount']?.toString() ?? '0.0') ?? 0.0,
+      deliveryFee:
+          double.tryParse(json['delivery_fee']?.toString() ?? '0.0') ?? 0.0,
       status: json['status']?.toString() ?? 'pending',
       createdAt: json['created_at'] != null
           ? DateTime.parse(json['created_at'])
@@ -62,7 +63,6 @@ class OrderModel {
       items: itemsJson.map((e) => OrderItemModel.fromJson(e)).toList(),
       address: json['address'] != null
           ? AddressModel.fromMap(json['address'])
-          // : AddressModel.empty(),
           : null,
     );
   }

@@ -3,7 +3,7 @@ import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/p
 class OrderItemModel {
   final String? id;
   final String orderId;
-  final int plantId;
+  final String plantId;
   final int quantity;
   final double price;
   PlantModel? plant;
@@ -31,9 +31,9 @@ class OrderItemModel {
     return OrderItemModel(
       id: json['id']?.toString(),
       orderId: json['order_id']?.toString() ?? '',
-      plantId: (json['plant_id'] as num?)?.toInt() ?? 0,
-      quantity: (json['quantity'] as num?)?.toInt() ?? 0,
-      price: (json['price'] as num?)?.toDouble() ?? 0.0,
+      plantId: json['plant_id']?.toString() ?? '0',
+      quantity: int.tryParse(json['quantity']?.toString() ?? '0') ?? 0,
+      price: double.tryParse(json['price']?.toString() ?? '0.0') ?? 0.0,
       plant: json['plants'] != null
           ? PlantModel.fromJson(json['plants'])
           : null,

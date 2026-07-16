@@ -96,7 +96,9 @@ class EditProductScreenMobile extends StatelessWidget {
                                 ? null
                                 : () {
                                     if (formKey.currentState!.validate()) {
-                                      providerState.submitProduct(context);
+                                      providerState.submitEditedProduct(
+                                        context,
+                                      );
                                     }
                                   },
                             child: Text(

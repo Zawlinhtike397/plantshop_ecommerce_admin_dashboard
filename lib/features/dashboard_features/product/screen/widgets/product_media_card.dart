@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +37,6 @@ class ProductMediaCard extends StatelessWidget {
             color: isDarkMode ? AppColor.gray : Color(0xFFF1F1F1),
             borderRadius: BorderRadius.circular(10),
           ),
-
           width: 120,
           height: 120,
           child: Center(
@@ -57,6 +54,11 @@ class ProductMediaCard extends StatelessWidget {
         ),
       );
     }
+
+    final bool hasThumbnail =
+        providerState.thumbnailBytes != null ||
+        (providerState.thumbnailWebUrl != null &&
+            providerState.thumbnailWebUrl!.isNotEmpty);
 
     return Container(
       decoration: BoxDecoration(
@@ -81,7 +83,7 @@ class ProductMediaCard extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.start,
             children: [
               if (!isMultiImage) ...[
-                (providerState.thumbnailBytes != null)
+                hasThumbnail
                     ? Container(
                         height: 120,
                         width: 120,
@@ -99,13 +101,18 @@ class ProductMediaCard extends StatelessWidget {
                       )
                     : buildPickerBox(),
               ] else ...[
-                if (providerState.additionalImagesBytes != null)
+                if (providerState.additionalImagesBytes.isNotEmpty)
                   ...List.generate(providerState.additionalImagesBytes.length, (
                     index,
                   ) {
-                    final hasWebUrl =
-                        kIsWeb &&
-                        providerState.additionalImagesWebUrls != null &&
+                    // final hasWebUrl =
+                    //     kIsWeb &&
+                    //     providerState.additionalImagesWebUrls != null &&
+                    //     providerState.additionalImagesWebUrls.length > index;
+                    final bytes = providerState.additionalImagesBytes[index];
+
+                    final isNetworkImage =
+                        bytes.isEmpty &&
                         providerState.additionalImagesWebUrls.length > index;
 
                     return Stack(
@@ -120,15 +127,17 @@ class ProductMediaCard extends StatelessWidget {
                               width: 0.5,
                             ),
                             image: DecorationImage(
-                              image: hasWebUrl
+                              image: isNetworkImage
+                                  // hasWebUrl
                                   ? NetworkImage(
                                           providerState
                                               .additionalImagesWebUrls![index],
                                         )
                                         as ImageProvider
                                   : MemoryImage(
-                                      providerState
-                                          .additionalImagesBytes![index],
+                                      bytes,
+                                      // providerState
+                                      //     .additionalImagesBytes![index],
                                     ),
                               fit: BoxFit.cover,
                             ),

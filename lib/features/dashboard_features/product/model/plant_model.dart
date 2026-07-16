@@ -1,4 +1,5 @@
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/model/care_guide_model.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/enums.dart';
 
 class PlantModel {
   String id;
@@ -15,6 +16,7 @@ class PlantModel {
   List<String> imageUrl;
   String description;
   Map<String, CareGuideModel>? careGuide;
+  bool? isActive;
 
   PlantModel({
     required this.id,
@@ -31,7 +33,25 @@ class PlantModel {
     required this.imageUrl,
     required this.description,
     this.careGuide,
+    this.isActive,
   });
+
+  PlantDisplayStatus get stockLevelStatus {
+    if (stock <= 0) {
+      return PlantDisplayStatus.outOfStock;
+    }
+    if (stock <= 5) {
+      return PlantDisplayStatus.low;
+    }
+    return PlantDisplayStatus.warning;
+  }
+
+  PlantDisplayStatus get displayStatus {
+    if (isActive == false || isActive == null) {
+      return PlantDisplayStatus.inactive;
+    }
+    return PlantDisplayStatus.active;
+  }
 
   static PlantModel empty() => PlantModel(
     id: '',
@@ -70,6 +90,7 @@ class PlantModel {
           'description': value.description,
         }),
       ),
+      'isActive': isActive,
     };
   }
 
@@ -110,6 +131,7 @@ class PlantModel {
           : [],
       description: json['description']?.toString() ?? '',
       careGuide: careGuideMap,
+      isActive: json['isActive'] ?? false,
     );
   }
 }

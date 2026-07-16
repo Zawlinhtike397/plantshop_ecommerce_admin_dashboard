@@ -26,6 +26,15 @@ class AddNewProduct extends ProductEvent {
   List<Object> get props => [plant];
 }
 
+class UpdateExistingProduct extends ProductEvent {
+  final PlantModel plant;
+
+  const UpdateExistingProduct(this.plant);
+
+  @override
+  List<Object> get props => [plant];
+}
+
 class DeleteProduct extends ProductEvent {
   final String plantId;
 

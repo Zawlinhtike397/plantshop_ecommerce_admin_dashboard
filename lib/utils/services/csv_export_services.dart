@@ -34,6 +34,7 @@ class CsvExportService {
       "Max Stock",
       "Restock Date",
       "Temperature",
+      "Is Active",
       "Pot",
       "Description",
     ]);
@@ -49,6 +50,7 @@ class CsvExportService {
         plant.maxStock,
         plant.restockedAt?.toIso8601String() ?? '-',
         plant.temperature,
+        plant.isActive,
         plant.pot,
         plant.description,
       ]);

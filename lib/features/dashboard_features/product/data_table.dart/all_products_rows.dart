@@ -80,6 +80,7 @@ class AllProductsRows extends DataTableSource {
     if (index >= plants.length) return null;
 
     final plant = plants[index];
+    final status = plant.displayStatus;
     final bool outOfStock = plant.stock <= 0;
 
     return DataRow2(
@@ -145,9 +146,9 @@ class AllProductsRows extends DataTableSource {
           Align(
             alignment: Alignment.center,
             child: Text(
-              outOfStock ? 'Out of Stock' : 'Active',
+              status.label,
               style: TextStyle(
-                color: outOfStock ? Colors.red : Colors.green,
+                color: status.color,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -174,7 +175,7 @@ class AllProductsRows extends DataTableSource {
               ),
               onSelected: (String value) async {
                 if (value == 'edit') {
-                  context.go(AppRoutes.editProduct);
+                  context.go(AppRoutes.editProduct, extra: plant);
                 } else if (value == 'delete') {
                   _showDeleteConfirmation(plant);
                 } else if (value == 'export') {
@@ -202,59 +203,6 @@ class AllProductsRows extends DataTableSource {
                     }
                   }
                 }
-                // else if (value == 'export') {
-                //   try {
-                //     ScaffoldMessenger.of(context).showSnackBar(
-                //       SnackBar(
-                //         content: Row(
-                //           children: [
-                //             const SizedBox(
-                //               width: 16,
-                //               height: 16,
-                //               child: CircularProgressIndicator(
-                //                 color: Colors.white,
-                //                 strokeWidth: 2,
-                //               ),
-                //             ),
-                //             const SizedBox(width: 12),
-                //             Expanded(
-                //               child: Text(
-                //                 'Preparing export for ${plant.name}...',
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //         behavior: SnackBarBehavior.floating,
-                //         width: 340,
-                //         duration: const Duration(seconds: 1),
-                //       ),
-                //     );
-
-                //     await CsvExportService.exportSinglePlant(plant);
-
-                //     if (context.mounted) {
-                //       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                //       ScaffoldMessenger.of(context).showSnackBar(
-                //         const SnackBar(
-                //           content: Text('CSV Exported Successfully!'),
-                //           backgroundColor: AppColor.primary,
-                //         ),
-                //       );
-                //     }
-                //   } catch (e) {
-                //     if (context.mounted) {
-                //       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                //       ScaffoldMessenger.of(context).showSnackBar(
-                //         SnackBar(
-                //           content: Text('Failed to export: $e'),
-                //           backgroundColor: Colors.red,
-                //           behavior: SnackBarBehavior.floating,
-                //           width: 340,
-                //         ),
-                //       );
-                //     }
-                //   }
-                // }
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                 PopupMenuItem<String>(

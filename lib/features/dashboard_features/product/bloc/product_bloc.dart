@@ -12,6 +12,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<FetchAllProducts>(_fetchAllProducts);
     on<SearchProducts>(_searchProducts);
     on<AddNewProduct>(_addNewProduct);
+    on<UpdateExistingProduct>(_updateProduct);
     on<DeleteProduct>(_deleteProduct);
   }
 
@@ -57,6 +58,21 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       emit(ProductLoading());
       await repository.addProduct(event.plant);
       emit(ProductActionSuccess("Product added successfully!"));
+      add(FetchAllProducts());
+    } catch (e) {
+      emit(ProductError(e.toString()));
+      add(FetchAllProducts());
+    }
+  }
+
+  Future<void> _updateProduct(
+    UpdateExistingProduct event,
+    Emitter<ProductState> emit,
+  ) async {
+    try {
+      emit(ProductLoading());
+      await repository.updateProduct(event.plant);
+      emit(const ProductActionSuccess("Product updated successfully!"));
       add(FetchAllProducts());
     } catch (e) {
       emit(ProductError(e.toString()));

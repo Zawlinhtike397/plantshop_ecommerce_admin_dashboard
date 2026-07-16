@@ -25,7 +25,7 @@ class InventoryWidget extends StatelessWidget {
         spacing: 25.0,
         children: [
           Text(
-            'Inventory',
+            'Inventory and Plant Status',
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -74,6 +74,27 @@ class InventoryWidget extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          CheckboxListTile(
+            title: Text(
+              'isActive',
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            subtitle: Text(
+              'Customers can see and purchase this plant.',
+              style: TextStyle(color: AppColor.midGray),
+            ),
+            value: context.watch<ProductProvider>().isActive,
+            onChanged: (bool? value) {
+              context.read<ProductProvider>().toggleActiveStatus(
+                value ?? false,
+              );
+            },
+            activeColor: AppColor.primary,
+            controlAffinity: ListTileControlAffinity.leading,
           ),
         ],
       ),

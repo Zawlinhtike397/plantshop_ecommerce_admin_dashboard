@@ -1,12 +1,15 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/enums.dart';
+
 class LowStockItem {
   final String name;
   final String productId;
   final String category;
   final int currentStock;
   final int maxStock;
-  final String status;
+  final PlantDisplayStatus status;
   final Color statusColor;
   final String image;
   final DateTime? lastRestocked;

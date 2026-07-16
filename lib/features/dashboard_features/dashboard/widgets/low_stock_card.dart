@@ -130,7 +130,7 @@ class LowStockCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        item.status,
+                        item.status.label,
                         style: TextStyle(
                           color: item.statusColor,
                           fontWeight: FontWeight.w600,

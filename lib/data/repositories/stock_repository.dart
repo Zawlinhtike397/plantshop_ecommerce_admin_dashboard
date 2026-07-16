@@ -1,8 +1,6 @@
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/stock/model/low_stock_item_model.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/model/plant_model.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/stock/model/stock_status_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter/material.dart';
 
 class StockRepository {
   final SupabaseClient supabase = Supabase.instance.client;
@@ -19,7 +17,7 @@ class StockRepository {
         .toList();
 
     return plants.map((plant) {
-      final status = _getStatus(plant.stock);
+      final status = plant.stockLevelStatus;
 
       return LowStockItem(
         name: plant.name,
@@ -27,7 +25,7 @@ class StockRepository {
         category: plant.category,
         currentStock: plant.stock,
         maxStock: plant.maxStock,
-        status: status.label,
+        status: status,
         statusColor: status.color,
         image: plant.thumbnailImg,
         lastRestocked: plant.restockedAt,
@@ -51,17 +49,5 @@ class StockRepository {
           'lastRestockedAt': DateTime.now().toIso8601String(),
         })
         .eq('id', plantId);
-  }
-
-  StockStatus _getStatus(int stock) {
-    if (stock <= 0) {
-      return StockStatus("Out of Stock", Colors.red);
-    }
-
-    if (stock <= 5) {
-      return StockStatus("Low", const Color.fromARGB(255, 237, 131, 93));
-    }
-
-    return StockStatus("Warning", const Color(0xFFEAB308));
   }
 }
