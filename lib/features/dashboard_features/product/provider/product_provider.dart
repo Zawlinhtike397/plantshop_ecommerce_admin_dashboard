@@ -31,8 +31,20 @@ class ProductProvider extends ChangeNotifier {
   String selectedCategory = 'Outdoor';
   String selectedPotType = 'Ceramic pot';
 
+  List<String> categories = [
+    'Outdoor',
+    'Indoor',
+    'Gardening',
+    'Flowering',
+    'Hanging',
+  ];
+  List<String> potTypes = ['Ceramic pot', 'Plastic pot'];
+
   String? _editingPlantId;
   String? get editingPlantId => _editingPlantId;
+
+  String? _thumbnailErrorText;
+  String? get thumbnailErrorText => _thumbnailErrorText;
 
   Uint8List? thumbnailBytes;
   String? thumbnailFileName;
@@ -55,6 +67,11 @@ class ProductProvider extends ChangeNotifier {
     stockController.dispose();
     maxStockController.dispose();
     priceController.dispose();
+    lightController.dispose();
+    waterController.dispose();
+    humidityController.dispose();
+    soilController.dispose();
+    petSafetyController.dispose();
     super.dispose();
   }
 
@@ -72,6 +89,17 @@ class ProductProvider extends ChangeNotifier {
     }
   }
 
+  void addNewCategory(String newCategory) {
+    final trimmed = newCategory.trim();
+    if (trimmed.isNotEmpty) {
+      if (!categories.contains(trimmed)) {
+        categories.add(trimmed);
+      }
+      selectedCategory = trimmed;
+      notifyListeners();
+    }
+  }
+
   Future<void> pickThumbnail() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
@@ -82,7 +110,7 @@ class ProductProvider extends ChangeNotifier {
       thumbnailBytes = bytes;
       thumbnailFileName = image.name;
       thumbnailWebUrl = image.path;
-
+      // _thumbnailErrorText = null;
       notifyListeners();
     }
   }
@@ -358,6 +386,21 @@ class ProductProvider extends ChangeNotifier {
   void toggleActiveStatus(bool value) {
     _isActive = value;
     notifyListeners();
+  }
+
+  bool validateThumbnail() {
+    bool isValid = true;
+
+    if (thumbnailBytes == null &&
+        (thumbnailWebUrl == null || thumbnailWebUrl!.isEmpty)) {
+      _thumbnailErrorText = 'Please provide a thumbnail image';
+      isValid = false;
+    } else {
+      _thumbnailErrorText = null;
+    }
+
+    notifyListeners();
+    return isValid;
   }
 
   void clearForm() {

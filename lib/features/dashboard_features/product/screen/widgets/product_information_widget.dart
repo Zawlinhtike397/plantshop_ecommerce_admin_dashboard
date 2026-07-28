@@ -9,6 +9,42 @@ import 'package:provider/provider.dart';
 class ProductInformationWidget extends StatelessWidget {
   const ProductInformationWidget({super.key});
 
+  void _showAddDialog(
+    BuildContext context,
+    String title,
+    Function(String) onAdd,
+  ) {
+    final TextEditingController controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Add New $title'),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(hintText: 'Enter $title name'),
+            autofocus: true,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (controller.text.trim().isNotEmpty) {
+                  onAdd(controller.text);
+                  Navigator.pop(context);
+                }
+              },
+              child: const Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -32,38 +68,62 @@ class ProductInformationWidget extends StatelessWidget {
               fontSize: 18,
             ),
           ),
-          Column(
+          Row(
             spacing: 5.0,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Plant Categories',
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
+              Expanded(
+                child: Column(
+                  spacing: 5.0,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Plant Categories',
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border.all(
+                          width: 0.5,
+                          color: AppColor.borderColor,
+                        ),
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                      child: CustomDropdown(
+                        isDarkMode: isDarkMode,
+                        value: providerState.selectedCategory.isEmpty
+                            ? providerState.categories.first
+                            : providerState.selectedCategory,
+                        itemsValue: providerState.categories,
+                        onChanged: providerState.handleCategoryChanged,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  border: Border.all(width: 0.5, color: AppColor.borderColor),
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-                child: CustomDropdown(
-                  isDarkMode: isDarkMode,
-                  value: providerState.selectedCategory.isEmpty
-                      ? 'Outdoor'
-                      : providerState.selectedCategory,
-                  itemsValue: [
-                    'Outdoor',
-                    'Indoor',
-                    'Gardening',
-                    'Flowering',
-                    'Hanging',
+              SizedBox(
+                width: 40,
+                child: Column(
+                  children: [
+                    SizedBox(height: 13),
+                    InkWell(
+                      onTap: () => _showAddDialog(
+                        context,
+                        'Category',
+                        providerState.addNewCategory,
+                      ),
+                      child: Icon(
+                        Icons.add_circle_outline,
+                        // size: 20,
+                        color: AppColor.buttonPrimary,
+                      ),
+                    ),
                   ],
-                  onChanged: providerState.handleCategoryChanged,
                 ),
               ),
             ],

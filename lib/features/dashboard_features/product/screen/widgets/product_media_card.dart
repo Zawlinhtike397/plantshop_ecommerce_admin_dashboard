@@ -10,12 +10,16 @@ class ProductMediaCard extends StatelessWidget {
   final String titleText;
   final String buttonText;
   final bool isMultiImage;
+  final String? errorText;
+  final bool isThumbnailImage;
 
   const ProductMediaCard({
     super.key,
     required this.titleText,
     required this.buttonText,
     this.isMultiImage = false,
+    this.errorText,
+    required this.isThumbnailImage,
   });
 
   @override
@@ -60,141 +64,162 @@ class ProductMediaCard extends StatelessWidget {
         (providerState.thumbnailWebUrl != null &&
             providerState.thumbnailWebUrl!.isNotEmpty);
 
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 0.5, color: AppColor.borderColor),
-      ),
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 12.0,
-        children: [
-          Text(
-            titleText,
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              width: errorText != null && isThumbnailImage ? 1.0 : 0.5,
+              color: errorText != null && isThumbnailImage
+                  ? Colors.red
+                  : AppColor.borderColor,
             ),
           ),
-          Wrap(
-            spacing: 10.0,
-            runSpacing: 10.0,
-            crossAxisAlignment: WrapCrossAlignment.start,
+          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 12.0,
             children: [
-              if (!isMultiImage) ...[
-                hasThumbnail
-                    ? Container(
-                        height: 120,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(
-                            image:
-                                kIsWeb && providerState.thumbnailWebUrl != null
-                                ? NetworkImage(providerState.thumbnailWebUrl!)
-                                      as ImageProvider
-                                : MemoryImage(providerState.thumbnailBytes!),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      )
-                    : buildPickerBox(),
-              ] else ...[
-                if (providerState.additionalImagesBytes.isNotEmpty)
-                  ...List.generate(providerState.additionalImagesBytes.length, (
-                    index,
-                  ) {
-                    // final hasWebUrl =
-                    //     kIsWeb &&
-                    //     providerState.additionalImagesWebUrls != null &&
-                    //     providerState.additionalImagesWebUrls.length > index;
-                    final bytes = providerState.additionalImagesBytes[index];
-
-                    final isNetworkImage =
-                        bytes.isEmpty &&
-                        providerState.additionalImagesWebUrls.length > index;
-
-                    return Stack(
-                      children: [
-                        Container(
-                          width: 120,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: AppColor.borderColor,
-                              width: 0.5,
-                            ),
-                            image: DecorationImage(
-                              image: isNetworkImage
-                                  // hasWebUrl
-                                  ? NetworkImage(
-                                          providerState
-                                              .additionalImagesWebUrls![index],
-                                        )
-                                        as ImageProvider
-                                  : MemoryImage(
-                                      bytes,
-                                      // providerState
-                                      //     .additionalImagesBytes![index],
-                                    ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 4,
-                          right: 4,
-                          child: GestureDetector(
-                            onTap: () =>
-                                providerState.removeAdditionalImage(index),
-
-                            child: Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: const BoxDecoration(
-                                color: Colors.red,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.close,
-                                size: 16,
-                                color: Colors.white,
+              Text(
+                titleText,
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Wrap(
+                spacing: 10.0,
+                runSpacing: 10.0,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                children: [
+                  if (!isMultiImage) ...[
+                    hasThumbnail
+                        ? Container(
+                            height: 120,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              image: DecorationImage(
+                                image:
+                                    kIsWeb &&
+                                        providerState.thumbnailWebUrl != null
+                                    ? NetworkImage(
+                                            providerState.thumbnailWebUrl!,
+                                          )
+                                          as ImageProvider
+                                    : MemoryImage(
+                                        providerState.thumbnailBytes!,
+                                      ),
+                                fit: BoxFit.cover,
                               ),
                             ),
-                          ),
-                        ),
-                      ],
-                    );
-                  }),
-                buildPickerBox(),
-              ],
+                          )
+                        : buildPickerBox(),
+                  ] else ...[
+                    if (providerState.additionalImagesBytes.isNotEmpty)
+                      ...List.generate(providerState.additionalImagesBytes.length, (
+                        index,
+                      ) {
+                        final bytes =
+                            providerState.additionalImagesBytes[index];
+
+                        final isNetworkImage =
+                            bytes.isEmpty &&
+                            providerState.additionalImagesWebUrls.length >
+                                index;
+
+                        return Stack(
+                          children: [
+                            Container(
+                              width: 120,
+                              height: 120,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: AppColor.borderColor,
+                                  width: 0.5,
+                                ),
+                                image: DecorationImage(
+                                  image: isNetworkImage
+                                      // hasWebUrl
+                                      ? NetworkImage(
+                                              providerState
+                                                  .additionalImagesWebUrls![index],
+                                            )
+                                            as ImageProvider
+                                      : MemoryImage(
+                                          bytes,
+                                          // providerState
+                                          //     .additionalImagesBytes![index],
+                                        ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 4,
+                              right: 4,
+                              child: GestureDetector(
+                                onTap: () =>
+                                    providerState.removeAdditionalImage(index),
+
+                                child: Container(
+                                  padding: EdgeInsets.all(2),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.red,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(
+                                    Icons.close,
+                                    size: 16,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
+                    buildPickerBox(),
+                  ],
+                ],
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColor.buttonPrimary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 20,
+                    ),
+                  ),
+                  onPressed: isMultiImage
+                      ? providerState.pickAdditionalImages
+                      : providerState.pickThumbnail,
+                  child: Text(
+                    buttonText,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
             ],
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColor.buttonPrimary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 20,
-                ),
-              ),
-              onPressed: isMultiImage
-                  ? providerState.pickAdditionalImages
-                  : providerState.pickThumbnail,
-              child: Text(
-                buttonText,
-                style: const TextStyle(color: Colors.white),
-              ),
+        ),
+        if (errorText != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0, left: 16.0),
+            child: Text(
+              errorText!,
+              style: TextStyle(color: Colors.red.shade700, fontSize: 12),
             ),
           ),
-        ],
-      ),
+      ],
     );
   }
 }

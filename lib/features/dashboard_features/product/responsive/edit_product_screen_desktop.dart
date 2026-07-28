@@ -20,6 +20,7 @@ class EditProductScreenDesktop extends StatelessWidget {
   Widget build(BuildContext context) {
     final providerState = context.watch<ProductProvider>();
     final formKey = providerState.editFormKey;
+
     return BlocListener<ProductBloc, ProductState>(
       listener: (context, state) {
         if (state is ProductActionSuccess) {
@@ -114,8 +115,14 @@ class EditProductScreenDesktop extends StatelessWidget {
                                       onPressed: state is ProductLoading
                                           ? null
                                           : () {
-                                              if (formKey.currentState!
-                                                  .validate()) {
+                                              final bool isFormValid = formKey
+                                                  .currentState!
+                                                  .validate();
+                                              final bool isMediaValid =
+                                                  providerState
+                                                      .validateThumbnail();
+
+                                              if (isFormValid && isMediaValid) {
                                                 providerState
                                                     .submitEditedProduct(
                                                       context,

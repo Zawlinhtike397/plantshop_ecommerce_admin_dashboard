@@ -60,11 +60,15 @@ class ProductMediaWidget extends StatelessWidget {
                 ? 'Change thumbnail image'
                 : 'Add thumbnail image',
             isMultiImage: false,
+            isThumbnailImage: true,
+            errorText: providerState.thumbnailErrorText,
           ),
           ProductMediaCard(
             titleText: 'Additional Images',
             buttonText: 'Add additional images',
             isMultiImage: true,
+            isThumbnailImage: false,
+            errorText: '',
           ),
         ],
       ),

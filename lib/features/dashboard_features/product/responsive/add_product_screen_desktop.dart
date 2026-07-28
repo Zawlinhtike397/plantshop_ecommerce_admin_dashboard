@@ -116,8 +116,14 @@ class AddProductScreenDesktop extends StatelessWidget {
                                       onPressed: state is ProductLoading
                                           ? null
                                           : () {
-                                              if (formKey.currentState!
-                                                  .validate()) {
+                                              final bool isFormValid = formKey
+                                                  .currentState!
+                                                  .validate();
+                                              final bool isMediaValid =
+                                                  providerState
+                                                      .validateThumbnail();
+
+                                              if (isFormValid && isMediaValid) {
                                                 providerState.submitProduct(
                                                   context,
                                                 );

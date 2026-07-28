@@ -178,24 +178,6 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
                       ),
 
                       const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "${selectedFilter.label} : $activeFilterCount",
-                            style: Theme.of(context).textTheme.bodyLarge!
-                                .copyWith(
-                                  color: activeFilterColor,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                          if (activeFilterCount != 0)
-                            TextButton(
-                              onPressed: () {},
-                              child: Text('See all'),
-                            ),
-                        ],
-                      ),
 
                       const SizedBox(height: 10),
 
@@ -216,9 +198,13 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
                                 ),
                               ),
                             )
-                          : Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: LowStockCard(item: filteredItems.first),
+                          : Column(
+                              children: filteredItems.map((item) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 16),
+                                  child: LowStockCard(items: item),
+                                );
+                              }).toList(),
                             ),
                     ],
                   ),

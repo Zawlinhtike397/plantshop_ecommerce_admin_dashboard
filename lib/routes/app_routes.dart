@@ -11,4 +11,5 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String addProduct = '/addProduct';
   static const String editProduct = '/editProduct';
+  static const String orderDetail = '/orderDetail';
 }

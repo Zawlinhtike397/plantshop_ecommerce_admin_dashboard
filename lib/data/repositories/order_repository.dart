@@ -8,12 +8,13 @@ class OrderRepository {
     final response = await supabase
         .from('orders')
         .select('''
-              *,
+              *,  
               address:address_id (*),
-              order_items (*, plants (*))
+              order_items (*, plants (*)), Users(*)
             ''')
         .order('created_at', ascending: false);
 
+    print(response.first);
     return (response as List).map((e) => OrderModel.fromJson(e)).toList();
   }
 }

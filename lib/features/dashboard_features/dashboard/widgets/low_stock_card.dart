@@ -5,13 +5,13 @@ import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/s
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 
 class LowStockCard extends StatelessWidget {
-  final LowStockItem item;
+  final LowStockItem items;
 
-  const LowStockCard({super.key, required this.item});
+  const LowStockCard({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
-    final double progress = item.currentStock / item.maxStock;
+    final double progress = items.currentStock / items.maxStock;
 
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
@@ -38,7 +38,7 @@ class LowStockCard extends StatelessWidget {
                 backgroundColor: isDarkMode
                     ? Colors.grey.shade800
                     : Colors.grey.shade200,
-                valueColor: AlwaysStoppedAnimation(item.statusColor),
+                valueColor: AlwaysStoppedAnimation(items.statusColor),
               ),
             ),
             const SizedBox(height: 5),
@@ -46,7 +46,7 @@ class LowStockCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${item.currentStock}",
+                  "${items.currentStock}",
                   style: TextStyle(
                     color: isDarkMode
                         ? Colors.grey.shade400
@@ -54,7 +54,7 @@ class LowStockCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "${item.maxStock}",
+                  "${items.maxStock}",
                   style: TextStyle(
                     color: isDarkMode
                         ? Colors.grey.shade400
@@ -72,7 +72,7 @@ class LowStockCard extends StatelessWidget {
               : CrossAxisAlignment.center,
           children: [
             Text(
-              "${item.currentStock}/${item.maxStock} pots",
+              "${items.currentStock}/${items.maxStock} pots",
               style: const TextStyle(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 14),
@@ -80,9 +80,9 @@ class LowStockCard extends StatelessWidget {
               onPressed: () {
                 context.read<StockBloc>().add(
                   ReorderPlant(
-                    plantId: item.productId,
-                    currentStock: item.currentStock,
-                    maxStock: item.maxStock,
+                    plantId: items.productId,
+                    currentStock: items.currentStock,
+                    maxStock: items.maxStock,
                   ),
                 );
               },
@@ -110,7 +110,7 @@ class LowStockCard extends StatelessWidget {
               crossAxisAlignment: WrapCrossAlignment.center,
               spacing: 10,
               children: [
-                Text(item.name, style: Theme.of(context).textTheme.titleLarge),
+                Text(items.name, style: Theme.of(context).textTheme.titleLarge),
 
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -118,7 +118,7 @@ class LowStockCard extends StatelessWidget {
                     vertical: 5,
                   ),
                   decoration: BoxDecoration(
-                    color: item.statusColor.withValues(alpha: 0.15),
+                    color: items.statusColor.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Row(
@@ -126,13 +126,13 @@ class LowStockCard extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 4,
-                        backgroundColor: item.statusColor,
+                        backgroundColor: items.statusColor,
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        item.status.label,
+                        items.status.label,
                         style: TextStyle(
-                          color: item.statusColor,
+                          color: items.statusColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -144,17 +144,16 @@ class LowStockCard extends StatelessWidget {
 
             const SizedBox(height: 8),
 
+            // Text(
+            //   "Product ID: ${items.productId}",
+            //   style: Theme.of(context).textTheme.titleMedium!.copyWith(
+            //     color: isDarkMode ? Colors.grey.shade400 : Colors.grey.shade700,
+            //     fontWeight: FontWeight.normal,
+            //     fontSize: 15,
+            //   ),
+            // ),
             Text(
-              "Product ID: ${item.productId}",
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: isDarkMode ? Colors.grey.shade400 : Colors.grey.shade700,
-                fontWeight: FontWeight.normal,
-                fontSize: 15,
-              ),
-            ),
-
-            Text(
-              "Category: ${item.category}",
+              "Category: ${items.category}",
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: isDarkMode ? Colors.grey.shade400 : Colors.grey.shade700,
                 fontWeight: FontWeight.normal,
@@ -185,9 +184,9 @@ class LowStockCard extends StatelessWidget {
             const SizedBox(height: 5),
 
             Text(
-              item.formattedRestockedAt.isEmpty
+              items.formattedRestockedAt.isEmpty
                   ? "Item is not restocked yet"
-                  : "Last restocked:     ${item.formattedRestockedAt}",
+                  : "Last restocked:     ${items.formattedRestockedAt}",
               style: TextStyle(
                 color: isDarkMode ? Colors.grey.shade400 : Colors.grey.shade700,
               ),
@@ -213,10 +212,18 @@ class LowStockCard extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.network(
-                        item.image,
+                        items.image,
                         width: double.infinity,
                         height: 200,
                         fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) {
+                          return Container(
+                            width: 46,
+                            height: 46,
+                            color: Colors.grey.shade200,
+                            child: const Icon(Icons.image_not_supported),
+                          );
+                        },
                       ),
                     ),
 
@@ -230,7 +237,7 @@ class LowStockCard extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.network(
-                        item.image,
+                        items.image,
                         width: 80,
                         height: 80,
                         fit: BoxFit.cover,

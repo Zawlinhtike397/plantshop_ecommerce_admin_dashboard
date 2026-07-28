@@ -12,6 +12,7 @@ class OrderModel {
   final double deliveryFee;
   final String? status;
   final DateTime? createdAt;
+  final String? customerName;
   List<OrderItemModel>? items;
   AddressModel? address;
 
@@ -28,6 +29,7 @@ class OrderModel {
     this.createdAt,
     this.items,
     this.address,
+    this.customerName,
   });
 
   Map<String, dynamic> toJson() {
@@ -64,6 +66,9 @@ class OrderModel {
       address: json['address'] != null
           ? AddressModel.fromMap(json['address'])
           : null,
+      customerName: json['Users'] != null
+          ? json['Users']['name']?.toString()
+          : null,
     );
   }
 
@@ -80,6 +85,7 @@ class OrderModel {
     DateTime? createdAt,
     List<OrderItemModel>? items,
     AddressModel? address,
+    String? customerName,
   }) {
     return OrderModel(
       id: id ?? this.id,
@@ -94,6 +100,7 @@ class OrderModel {
       createdAt: createdAt ?? this.createdAt,
       items: items ?? this.items,
       address: address ?? this.address,
+      customerName: customerName ?? this.customerName,
     );
   }
 }

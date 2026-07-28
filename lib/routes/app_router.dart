@@ -7,6 +7,7 @@ import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/c
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/customer/screen/customer_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/screen/dashboard_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/discount/screen/discount_screen.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/screen/order_detail_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/screen/order_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/model/plant_model.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/screen/add_product_screen.dart';
@@ -78,6 +79,12 @@ class AppRouter {
                 final plant = state.extra as PlantModel;
 
                 return EditProductScreen(plant: plant);
+              },
+            ),
+            GoRoute(
+              path: AppRoutes.orderDetail,
+              builder: (context, state) {
+                return OrderDetailScreen();
               },
             ),
           ],
