@@ -96,21 +96,21 @@ class _ZSideBarState extends State<ZSideBar> {
                               route: AppRoutes.orders,
                               iconPath: ImageStrings.orderIcon,
                             ),
-                            ZMenuItem(
-                              itemName: 'Customers',
-                              route: AppRoutes.customers,
-                              iconPath: ImageStrings.customerIcon,
-                            ),
+                            // ZMenuItem(
+                            //   itemName: 'Customers',
+                            //   route: AppRoutes.customers,
+                            //   iconPath: ImageStrings.customerIcon,
+                            // ),
                             ZMenuItem(
                               itemName: 'Discount Cupons',
                               route: AppRoutes.discountCupons,
                               iconPath: ImageStrings.discountCuponIcon,
                             ),
-                            ZMenuItem(
-                              itemName: 'Categories',
-                              route: AppRoutes.categories,
-                              iconPath: ImageStrings.categoryIcon,
-                            ),
+                            // ZMenuItem(
+                            //   itemName: 'Categories',
+                            //   route: AppRoutes.categories,
+                            //   iconPath: ImageStrings.categoryIcon,
+                            // ),
                             SizedBox(height: 9.0),
                             Text(
                               'System',
@@ -123,11 +123,11 @@ class _ZSideBarState extends State<ZSideBar> {
                                   ),
                             ),
                             SizedBox(height: 0.5),
-                            ZMenuItem(
-                              itemName: 'Settings',
-                              route: AppRoutes.settings,
-                              iconPath: ImageStrings.settingsIcon,
-                            ),
+                            // ZMenuItem(
+                            //   itemName: 'Settings',
+                            //   route: AppRoutes.settings,
+                            //   iconPath: ImageStrings.settingsIcon,
+                            // ),
                             Padding(
                               padding: EdgeInsets.only(left: 6.0),
                               child: Row(

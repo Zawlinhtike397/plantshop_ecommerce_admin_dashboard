@@ -13,6 +13,7 @@ class OrderModel {
   final String? status;
   final DateTime? createdAt;
   final String? customerName;
+  final String? customerEmail;
   List<OrderItemModel>? items;
   AddressModel? address;
 
@@ -29,6 +30,7 @@ class OrderModel {
     this.createdAt,
     this.items,
     this.address,
+    this.customerEmail,
     this.customerName,
   });
 
@@ -69,6 +71,9 @@ class OrderModel {
       customerName: json['Users'] != null
           ? json['Users']['name']?.toString()
           : null,
+      customerEmail: json['Users'] != null
+          ? json['Users']['email']?.toString()
+          : null,
     );
   }
 
@@ -86,6 +91,7 @@ class OrderModel {
     List<OrderItemModel>? items,
     AddressModel? address,
     String? customerName,
+    String? customerEmail,
   }) {
     return OrderModel(
       id: id ?? this.id,
@@ -101,6 +107,7 @@ class OrderModel {
       items: items ?? this.items,
       address: address ?? this.address,
       customerName: customerName ?? this.customerName,
+      customerEmail: customerEmail ?? this.customerEmail,
     );
   }
 }

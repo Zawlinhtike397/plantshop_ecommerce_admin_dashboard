@@ -1,10 +1,12 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/common/data_table/paginated_data_table.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/common/data_table/table_action_header.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/common/data_table/table_header.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/bloc/product_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/data_table.dart/all_products_rows.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/routes/app_routes.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/themes/cubit/theme_cubit.dart';
 
@@ -27,13 +29,17 @@ class AllProductsDataTable extends StatelessWidget {
 
         child: Column(
           children: [
-            TableActionHeader(
+            TableHeader(
               isDarkMode: isDarkMode,
               hintText: 'Search specific plants',
               buttonText: 'Add Plant',
               onSearchChanged: (query) {
                 context.read<ProductBloc>().add(SearchProducts(query));
               },
+              onActionPressed: () {
+                context.go(AppRoutes.addProduct);
+              },
+              haveActionBtn: true,
             ),
             const SizedBox(height: 24),
 

@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/routes/app_routes.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 
-class TableActionHeader extends StatelessWidget {
+class TableHeader extends StatelessWidget {
   final bool isDarkMode;
   final String hintText;
   final String buttonText;
   final Function(String)? onSearchChanged;
+  final bool haveActionBtn;
+  final VoidCallback? onActionPressed;
 
-  const TableActionHeader({
+  const TableHeader({
     super.key,
     required this.isDarkMode,
     required this.hintText,
     required this.buttonText,
     this.onSearchChanged,
+    required this.haveActionBtn,
+    this.onActionPressed,
   });
 
   @override
@@ -46,9 +48,7 @@ class TableActionHeader extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           padding: padding,
         ),
-        onPressed: () {
-          context.go(AppRoutes.addProduct);
-        },
+        onPressed: onActionPressed,
         child: Text(text, style: const TextStyle(color: Colors.white)),
       );
     }
@@ -68,14 +68,19 @@ class TableActionHeader extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              Expanded(
-                child: SizedBox(
-                  child: buildAddButton(
-                    text: buttonText,
-                    padding: const EdgeInsets.only(top: 22.0, bottom: 22.0),
-                  ),
-                ),
-              ),
+              haveActionBtn
+                  ? Expanded(
+                      child: SizedBox(
+                        child: buildAddButton(
+                          text: buttonText,
+                          padding: const EdgeInsets.only(
+                            top: 22.0,
+                            bottom: 22.0,
+                          ),
+                        ),
+                      ),
+                    )
+                  : SizedBox.shrink(),
             ],
           );
         }
@@ -92,16 +97,18 @@ class TableActionHeader extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            SizedBox(
-              height: 46,
-              child: buildAddButton(
-                text: 'Add New Plant',
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 22.0,
-                ),
-              ),
-            ),
+            haveActionBtn
+                ? SizedBox(
+                    height: 46,
+                    child: buildAddButton(
+                      text: buttonText,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 22.0,
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink(),
           ],
         );
       },

@@ -10,6 +10,10 @@ class AppRoutes {
   static const String logout = '/logout';
   static const String profile = '/profile';
   static const String addProduct = '/addProduct';
-  static const String editProduct = '/editProduct';
-  static const String orderDetail = '/orderDetail';
+
+  static String editProduct = '/editProduct/:id';
+  static String editProductPath(String id) => '/editProduct/$id';
+
+  static const String orderDetail = '/orderDetail/:id';
+  static String orderDetailPath(String id) => '/orderDetail/$id';
 }

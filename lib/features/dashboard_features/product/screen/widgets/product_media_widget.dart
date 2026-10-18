@@ -51,7 +51,7 @@ class ProductMediaWidget extends StatelessWidget {
             'Product Media',
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.bold,
-              fontSize: 18,
+              fontSize: 16,
             ),
           ),
           ProductMediaCard(

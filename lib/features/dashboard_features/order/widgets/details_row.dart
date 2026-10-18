@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 
 class DetailsRow extends StatelessWidget {
   final String label;
@@ -13,6 +14,7 @@ class DetailsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: Row(
@@ -20,16 +22,19 @@ class DetailsRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(
-              color: Colors.grey.shade600,
-              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-            ),
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
           ),
-          Text(
-            value,
-            style: TextStyle(
-              color: Colors.grey.shade800,
-              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                // fontSize: 13,
+                color: Colors.grey.shade600,
+                fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              ),
             ),
           ),
         ],

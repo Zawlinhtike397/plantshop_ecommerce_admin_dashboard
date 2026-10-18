@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 
 class TimelineWidget extends StatelessWidget {
   final String text;
@@ -16,11 +17,12 @@ class TimelineWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
+      // mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Column(
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 4),
+              margin: const EdgeInsets.only(top: 3),
               width: 10,
               height: 10,
               decoration: BoxDecoration(
@@ -33,23 +35,25 @@ class TimelineWidget extends StatelessWidget {
             if (!isLast)
               Container(
                 width: 2,
-                height: 32,
+                height: 54,
                 color: isCompleted
-                    ? const Color(0xFF4CAF50)
+                    ? AppColor.primary
+                    //  const Color(0xFF4CAF50)
                     : Colors.grey.shade300,
               ),
           ],
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 24.0),
+          child: Container(
+            margin: isLast
+                ? const EdgeInsets.only(bottom: 20.0)
+                : EdgeInsets.zero,
             child: Text(
               text,
               style: TextStyle(
-                color: isCompleted
-                    ? Colors.grey.shade800
-                    : Colors.grey.shade500,
+                fontSize: 13,
+                color: isCompleted ? AppColor.primary : Colors.grey.shade500,
               ),
             ),
           ),

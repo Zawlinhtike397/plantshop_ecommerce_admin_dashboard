@@ -25,7 +25,7 @@ class DashboardScreenTablet extends StatelessWidget {
                   fontSize: 20,
                 ),
               ),
-              OverallDataGrid(),
+
               Row(
                 spacing: 15.0,
                 children: [

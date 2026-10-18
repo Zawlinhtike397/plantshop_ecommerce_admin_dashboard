@@ -13,8 +13,12 @@ final class OrderLoading extends OrderState {}
 
 final class OrderLoaded extends OrderState {
   final List<OrderModel> orders;
+  final List<OrderModel> filteredOrders;
 
-  const OrderLoaded(this.orders);
+  const OrderLoaded({required this.orders, required this.filteredOrders});
+
+  @override
+  List<Object> get props => [orders, filteredOrders];
 }
 
 class OrderError extends OrderState {

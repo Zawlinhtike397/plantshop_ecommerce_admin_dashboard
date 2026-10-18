@@ -2,9 +2,11 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/common/data_table/table_action_menu.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/model/order_model.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/routes/app_routes.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/services/csv_export_services.dart';
+import 'package:toastification/toastification.dart';
 
 class AllOrdersRows extends DataTableSource {
   final BuildContext context;
@@ -82,65 +84,97 @@ class AllOrdersRows extends DataTableSource {
             ),
           ),
         ),
-
         DataCell(
-          Align(
-            alignment: Alignment.center,
-            child: PopupMenuButton<String>(
-              icon: Icon(
-                Icons.more_horiz,
-                color: isDarkMode ? Colors.white : Colors.black,
-              ),
-              color: isDarkMode ? AppColor.dark2 : AppColor.white,
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-                side: BorderSide(
-                  color: isDarkMode
-                      ? AppColor.dark3
-                      : AppColor.borderColor.withValues(alpha: 0.5),
-                ),
-              ),
-              onSelected: (String value) async {
-                if (value == 'view detail') {
-                  context.go(AppRoutes.orderDetail);
-                } else if (value == 'delete') {
-                } else if (value == 'export') {
-                  try {} catch (e) {}
+          TableActionMenu(
+            isDarkMode: isDarkMode,
+            onSelected: (String value) async {
+              if (value == 'view detail') {
+                context.go(AppRoutes.orderDetailPath(order.id!), extra: order);
+              } else if (value == 'export') {
+                try {
+                  final formattedStatus =
+                      order.status != null && order.status!.isNotEmpty
+                      ? '${order.status![0].toUpperCase()}${order.status!.substring(1)}'
+                      : 'Pending';
+
+                  final itemsText = orderItems
+                      .map((item) {
+                        final plantName = item.plant?.name ?? 'Unknown Plant';
+                        return '${item.quantity} x $plantName';
+                      })
+                      .join('; ');
+
+                  await CsvExportService.exportTable(
+                    headers: [
+                      'Order ID',
+                      'Customer Name',
+                      'Order Items',
+                      'Order Date',
+                      'Total Amount (MMK)',
+                      'Status',
+                    ],
+                    rows: [
+                      [
+                        order.id ?? '-',
+                        customerName,
+                        itemsText,
+                        formattedDate,
+                        order.totalAmount.toInt(),
+                        formattedStatus,
+                      ],
+                    ],
+                    fileName: 'order_${shortId}_data',
+                  );
+
+                  if (context.mounted) {
+                    toastification.show(
+                      context: context,
+                      type: ToastificationType.success,
+                      style: ToastificationStyle.flatColored,
+                      title: const Text('Export Complete'),
+                      description: Text('Order $shortId data downloaded.'),
+                      alignment: Alignment.bottomCenter,
+                      autoCloseDuration: const Duration(seconds: 3),
+                    );
+                  }
+                } catch (e) {
+                  if (context.mounted) {
+                    toastification.show(
+                      context: context,
+                      type: ToastificationType.error,
+                      style: ToastificationStyle.flatColored,
+                      title: const Text('Export Failed'),
+                      description: const Text(
+                        'Unable to export order data. Please try again.',
+                      ),
+                      alignment: Alignment.bottomCenter,
+                      autoCloseDuration: const Duration(seconds: 3),
+                    );
+                  }
                 }
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                PopupMenuItem<String>(
-                  value: 'view detail',
-                  child: Text(
-                    'View Detail',
-                    style: TextStyle(
-                      color: isDarkMode ? Colors.white : Colors.black,
-                    ),
+              }
+            },
+            items: [
+              PopupMenuItem<String>(
+                value: 'view detail',
+                child: Text(
+                  'View Detail',
+                  style: TextStyle(
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
-                const PopupMenuDivider(height: 1),
-                PopupMenuItem<String>(
-                  value: 'delete',
-                  child: Text(
-                    'Delete',
-                    style: TextStyle(
-                      color: isDarkMode ? Colors.white : Colors.black,
-                    ),
+              ),
+              const PopupMenuDivider(height: 1),
+              PopupMenuItem<String>(
+                value: 'export',
+                child: Text(
+                  'Export CSV',
+                  style: TextStyle(
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
-                const PopupMenuDivider(height: 1),
-                PopupMenuItem<String>(
-                  value: 'export',
-                  child: Text(
-                    'Export CSV',
-                    style: TextStyle(
-                      color: isDarkMode ? Colors.white : Colors.black,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],

@@ -2,7 +2,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/common/data_table/paginated_data_table.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/common/data_table/table_action_header.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/common/data_table/table_header.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/bloc/order_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/data_table/all_orders_row.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
@@ -27,11 +27,14 @@ class AllOrdersDataTable extends StatelessWidget {
 
         child: Column(
           children: [
-            TableActionHeader(
+            TableHeader(
               isDarkMode: isDarkMode,
               hintText: 'Search specific orders',
               buttonText: 'Add Order',
-              onSearchChanged: (query) {},
+              onSearchChanged: (query) {
+                context.read<OrderBloc>().add(SearchOrders(query));
+              },
+              haveActionBtn: false,
             ),
             const SizedBox(height: 24),
 
@@ -43,8 +46,13 @@ class AllOrdersDataTable extends StatelessWidget {
                   } else if (state is OrderError) {
                     return Center(child: Text(state.message));
                   } else if (state is OrderLoaded) {
+                    if (state.filteredOrders.isEmpty) {
+                      return const Center(
+                        child: Text('No orders match your search.'),
+                      );
+                    }
                     return AppPaginatedDataTable(
-                      // key: ValueKey(state.filteredProducts.length),
+                      key: ValueKey(state.filteredOrders.length),
                       minWidth: 700,
                       columns: const [
                         DataColumn2(
@@ -93,7 +101,7 @@ class AllOrdersDataTable extends StatelessWidget {
                       source: AllOrdersRows(
                         context: context,
                         isDarkMode: isDarkMode,
-                        orders: state.orders,
+                        orders: state.filteredOrders,
                       ),
                       rowsPerPage: 5,
                       isDarkMode: isDarkMode,

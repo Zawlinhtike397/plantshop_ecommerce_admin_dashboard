@@ -14,7 +14,20 @@ class OrderRepository {
             ''')
         .order('created_at', ascending: false);
 
-    print(response.first);
     return (response as List).map((e) => OrderModel.fromJson(e)).toList();
+  }
+
+  Future<void> updateOrderStatus(String orderId, String status) async {
+    final response = await supabase
+        .from('orders')
+        .update({'status': status})
+        .eq('id', orderId)
+        .neq('status', 'delivered')
+        .neq('status', 'cancelled')
+        .select('id, status');
+
+    if (response.isEmpty) {
+      throw Exception("Something went wrong while updating");
+    }
   }
 }

@@ -5,6 +5,7 @@ class ItemRow extends StatelessWidget {
   final String qty;
   final String price;
   final String total;
+  final String? imageUrl;
 
   const ItemRow({
     super.key,
@@ -12,20 +13,40 @@ class ItemRow extends StatelessWidget {
     required this.qty,
     required this.price,
     required this.total,
+    this.imageUrl,
   });
+
+  Widget _buildPlaceholder() {
+    return Container(
+      width: 70,
+      height: 70,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: const Icon(Icons.eco, color: Colors.green),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Container(
-          width: 48,
-          height: 48,
           decoration: BoxDecoration(
             color: Colors.grey.shade200,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: const Icon(Icons.eco, color: Colors.green),
+          child: imageUrl != null && imageUrl!.isNotEmpty
+              ? Image.network(
+                  imageUrl!,
+                  width: 70,
+                  height: 70,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) =>
+                      _buildPlaceholder(),
+                )
+              : _buildPlaceholder(),
         ),
         const SizedBox(width: 16),
         Expanded(

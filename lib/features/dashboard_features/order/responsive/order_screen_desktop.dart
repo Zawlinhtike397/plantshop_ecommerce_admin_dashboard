@@ -22,7 +22,6 @@ class OrderScreenDesktop extends StatelessWidget {
 
             const SizedBox(height: 24),
             AllOrdersDataTable(),
-            // AllProductsDataTable(),
           ],
         ),
       ),

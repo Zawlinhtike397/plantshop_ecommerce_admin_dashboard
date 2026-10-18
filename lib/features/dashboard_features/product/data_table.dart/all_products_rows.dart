@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/common/data_table/table_action_menu.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/bloc/product_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/model/plant_model.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/routes/app_routes.dart';
@@ -156,86 +157,71 @@ class AllProductsRows extends DataTableSource {
         ),
 
         DataCell(
-          Align(
-            alignment: Alignment.center,
-            child: PopupMenuButton<String>(
-              icon: Icon(
-                Icons.more_horiz,
-                color: isDarkMode ? Colors.white : Colors.black,
-              ),
-              color: isDarkMode ? AppColor.dark2 : AppColor.white,
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-                side: BorderSide(
-                  color: isDarkMode
-                      ? AppColor.dark3
-                      : AppColor.borderColor.withValues(alpha: 0.5),
-                ),
-              ),
-              onSelected: (String value) async {
-                if (value == 'edit') {
-                  context.go(AppRoutes.editProduct, extra: plant);
-                } else if (value == 'delete') {
-                  _showDeleteConfirmation(plant);
-                } else if (value == 'export') {
-                  try {
-                    await CsvExportService.exportSinglePlant(plant);
-                    if (context.mounted) {
-                      toastification.show(
-                        context: context,
-                        type: ToastificationType.success,
-                        style: ToastificationStyle.flatColored,
-                        title: Text('Export Complete'),
-                        description: Text('${plant.name} data downloaded.'),
-                        alignment: Alignment.bottomCenter,
-                        autoCloseDuration: const Duration(seconds: 3),
-                      );
-                    }
-                  } catch (e) {
-                    if (context.mounted) {
-                      toastification.show(
-                        context: context,
-                        type: ToastificationType.error,
-                        title: Text('Export Failed'),
-                        alignment: Alignment.topRight,
-                      );
-                    }
+          TableActionMenu(
+            isDarkMode: isDarkMode,
+            onSelected: (String value) async {
+              if (value == 'edit') {
+                context.go(AppRoutes.editProductPath(plant.id), extra: plant);
+              } else if (value == 'delete') {
+                _showDeleteConfirmation(plant);
+              } else if (value == 'export') {
+                try {
+                  await CsvExportService.exportSinglePlant(plant);
+
+                  if (context.mounted) {
+                    toastification.show(
+                      context: context,
+                      type: ToastificationType.success,
+                      style: ToastificationStyle.flatColored,
+                      title: const Text('Export Complete'),
+                      description: Text('${plant.name} data downloaded.'),
+                      alignment: Alignment.bottomCenter,
+                      autoCloseDuration: const Duration(seconds: 3),
+                    );
+                  }
+                } catch (e) {
+                  if (context.mounted) {
+                    toastification.show(
+                      context: context,
+                      type: ToastificationType.error,
+                      title: const Text('Export Failed'),
+                      alignment: Alignment.topRight,
+                    );
                   }
                 }
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                PopupMenuItem<String>(
-                  value: 'edit',
-                  child: Text(
-                    'Edit',
-                    style: TextStyle(
-                      color: isDarkMode ? Colors.white : Colors.black,
-                    ),
+              }
+            },
+            items: [
+              PopupMenuItem<String>(
+                value: 'edit',
+                child: Text(
+                  'Edit',
+                  style: TextStyle(
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
-                const PopupMenuDivider(height: 1),
-                PopupMenuItem<String>(
-                  value: 'delete',
-                  child: Text(
-                    'Delete',
-                    style: TextStyle(
-                      color: isDarkMode ? Colors.white : Colors.black,
-                    ),
+              ),
+              const PopupMenuDivider(height: 1),
+              PopupMenuItem<String>(
+                value: 'delete',
+                child: Text(
+                  'Delete',
+                  style: TextStyle(
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
-                const PopupMenuDivider(height: 1),
-                PopupMenuItem<String>(
-                  value: 'export',
-                  child: Text(
-                    'Export CSV',
-                    style: TextStyle(
-                      color: isDarkMode ? Colors.white : Colors.black,
-                    ),
+              ),
+              const PopupMenuDivider(height: 1),
+              PopupMenuItem<String>(
+                value: 'export',
+                child: Text(
+                  'Export CSV',
+                  style: TextStyle(
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],

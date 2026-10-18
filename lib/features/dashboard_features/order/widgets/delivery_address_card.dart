@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/customer/model/address_model.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/widgets/base_card.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/widgets/details_row.dart';
 
 class DeliveryAddressCard extends StatelessWidget {
-  const DeliveryAddressCard({super.key});
+  final AddressModel? address;
+  const DeliveryAddressCard({super.key, this.address});
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +13,10 @@ class DeliveryAddressCard extends StatelessWidget {
       title: 'Delivery Address',
       child: Column(
         children: [
-          DetailsRow(label: 'Contact Name:', value: 'Gym'),
-          DetailsRow(label: 'Home no:', value: '34343'),
-          DetailsRow(label: 'Street:', value: 'KyanGyi'),
-          DetailsRow(label: 'Town', value: 'Hledan'),
+          // DetailsRow(label: 'Contact Name:', value: 'Gym'),
+          DetailsRow(label: 'Home no:', value: address?.homeNo ?? 'N/A'),
+          DetailsRow(label: 'Street:', value: address?.street ?? 'N/A'),
+          DetailsRow(label: 'Town', value: address?.city ?? 'N/A'),
         ],
       ),
     );

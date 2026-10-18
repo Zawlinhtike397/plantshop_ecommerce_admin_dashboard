@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
 
 class BaseCard extends StatelessWidget {
   final String title;
@@ -8,11 +9,13 @@ class BaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDarkMode ? AppColor.dark1 : AppColor.white,
         borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: const Color.fromARGB(255, 222, 221, 221)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.02),
@@ -24,10 +27,12 @@ class BaseCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Only show title if it's placed in a row with Item Summary which had standard title placement
           Text(
             title,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
           ),
           const SizedBox(height: 24),
           child,

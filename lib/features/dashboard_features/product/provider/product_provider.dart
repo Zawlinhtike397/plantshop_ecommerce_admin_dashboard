@@ -242,7 +242,7 @@ class ProductProvider extends ChangeNotifier {
   void initializeEditForm(PlantModel plant) {
     clearForm();
     _editingPlantId = plant.id;
-    _isActive = plant.isActive ?? true;
+    _isActive = plant.isActive ?? true; //why true, not false?
 
     nameController.text = plant.name;
     descriptionController.text = plant.description;

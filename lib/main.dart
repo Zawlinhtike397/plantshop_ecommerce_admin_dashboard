@@ -4,11 +4,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/common/sidebar/cubit/sidebar_cubit.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/data/repositories/authentication_repository.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/data/repositories/discount_repository.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/data/repositories/order_repository.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/data/repositories/product_repository.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/data/repositories/stock_repository.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/bloc/app_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/screen/app.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/discount/bloc/discount_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/bloc/order_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/product/bloc/product_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/stock/bloc/stock_bloc.dart';
@@ -31,6 +33,7 @@ Future<void> main() async {
         RepositoryProvider(create: (_) => AuthenticationRepository()),
         RepositoryProvider(create: (_) => OrderRepository()),
         RepositoryProvider(create: (_) => ProductRepository()),
+        RepositoryProvider(create: (_) => DiscountRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -55,6 +58,11 @@ Future<void> main() async {
             create: (context) =>
                 ProductBloc(repository: context.read<ProductRepository>())
                   ..add(FetchAllProducts()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                DiscountBloc(context.read<DiscountRepository>())
+                  ..add(FetchDiscounts()),
           ),
         ],
         child: const MyApp(),

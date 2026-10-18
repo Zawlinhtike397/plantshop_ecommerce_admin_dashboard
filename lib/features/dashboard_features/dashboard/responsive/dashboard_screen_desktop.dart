@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/data_table/top_products_data_table.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/widgets/low_stock_alert_section.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/widgets/overall_data_grid.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/widgets/revenue_chart_section.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/widgets/top_categories_pie_chart.dart';
 
@@ -25,7 +24,6 @@ class DashboardScreenDesktop extends StatelessWidget {
                   fontSize: 20,
                 ),
               ),
-              OverallDataGrid(),
               Row(
                 spacing: 15.0,
                 children: [

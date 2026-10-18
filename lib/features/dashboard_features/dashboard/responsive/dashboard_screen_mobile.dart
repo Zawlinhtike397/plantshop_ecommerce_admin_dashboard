@@ -25,7 +25,7 @@ class DashboardScreenMobile extends StatelessWidget {
                   fontSize: 20,
                 ),
               ),
-              OverallDataGrid(),
+
               RevenueChartSection(),
               Container(
                 decoration: BoxDecoration(
