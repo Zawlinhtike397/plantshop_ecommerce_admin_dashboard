@@ -378,7 +378,6 @@ class _AddEditDiscountDialogState extends State<AddEditDiscountDialog> {
 
                 const SizedBox(height: 12),
 
-                // Switches
                 Row(
                   children: [
                     _buildSwitch(

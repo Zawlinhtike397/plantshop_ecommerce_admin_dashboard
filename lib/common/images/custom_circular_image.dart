@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/enums.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/popups/shimmer_effect.dart';
-// import '../shimmers/shimmer.dart';
 
 class AppCircularImage extends StatelessWidget {
   final BoxFit? fit;
@@ -83,7 +82,6 @@ class AppCircularImage extends StatelessWidget {
             const ZShimmerEffect(width: 55, height: 55),
       );
     } else {
-      // Return an empty container if no image is provided
       return Container();
     }
   }

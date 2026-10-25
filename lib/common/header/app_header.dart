@@ -38,44 +38,8 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
             icon: Icon(Icons.notifications_outlined),
           ),
           SizedBox(width: 16.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Obx(
-              //   () => TRoundedImage(
-              //     width: 40,
-              //     height: 40,
-              //     padding: 2,
-              //     imageType: controller.user.value.profilePicture!.isNotEmpty
-              //         ? ImageType.network
-              //         : ImageType.asset,
-              //     image: controller.user.value.profilePicture!.isNotEmpty
-              //         ? controller.user.value.profilePicture
-              //         : TImages.user,
-              //   ),
-              // ),
-              // SizedBox(width: TSizes.sm),
-              // if (!TDeviceUtils.isMobileScreen(context))
-              //   Obx(
-              //     () => Column(
-              //       mainAxisSize: MainAxisSize.min,
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: [
-              //         controller.isLoading.value
-              //             ? ZShimmerEffect(width: 50, height: 13)
-              //             : Text(
-              //                 controller.user.value.fullName,
-              //                 style: Theme.of(context).textTheme.titleLarge,
-              //               ),
-              //         controller.isLoading.value
-              //             ? ZShimmerEffect(width: 50, height: 13)
-              //             : Text(
-              //                 controller.user.value.email,
-              //                 style: Theme.of(context).textTheme.labelMedium,
-              //               ),
-              //       ],
-              //     ),
-              //   ),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+
             ],
           ),
         ],

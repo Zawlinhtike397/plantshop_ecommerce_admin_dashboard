@@ -35,7 +35,6 @@ class DashboardScreenDesktop extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    // flex: 2,
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),

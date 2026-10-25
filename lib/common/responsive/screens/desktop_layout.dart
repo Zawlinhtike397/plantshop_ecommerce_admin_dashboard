@@ -12,13 +12,7 @@ class DesktopLayout extends StatelessWidget {
         children: [
           SizedBox(width: 260, child: ZSideBar()),
           Expanded(
-            child: Column(
-              children: [
-                // header
-                // AppHeader(),
-                Expanded(child: body ?? SizedBox()),
-              ],
-            ),
+            child: Column(children: [Expanded(child: body ?? SizedBox())]),
           ),
         ],
       ),

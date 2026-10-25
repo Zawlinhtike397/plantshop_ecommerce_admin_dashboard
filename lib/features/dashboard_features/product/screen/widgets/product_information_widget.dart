@@ -119,7 +119,6 @@ class ProductInformationWidget extends StatelessWidget {
                       ),
                       child: Icon(
                         Icons.add_circle_outline,
-                        // size: 20,
                         color: AppColor.buttonPrimary,
                       ),
                     ),

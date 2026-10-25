@@ -31,7 +31,6 @@ class DetailsRow extends StatelessWidget {
               textAlign: TextAlign.end,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                // fontSize: 13,
                 color: Colors.grey.shade600,
                 fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
               ),

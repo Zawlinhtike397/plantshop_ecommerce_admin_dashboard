@@ -60,11 +60,9 @@ class AllOrdersRows extends DataTableSource {
           ),
         ),
 
-        // Order Date
         DataCell(
           Align(alignment: Alignment.center, child: Text(formattedDate)),
         ),
-        // Price
         DataCell(
           Align(
             alignment: Alignment.center,

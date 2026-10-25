@@ -76,7 +76,6 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
         return Container(
           height: 480,
           padding: const EdgeInsets.all(24),
-          // margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),,
           decoration: BoxDecoration(
             color: isDarkMode ? AppColor.dark1 : AppColor.white,
             borderRadius: BorderRadius.circular(24),
@@ -150,7 +149,6 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
                                       selectedFilter = PlantDisplayStatus.low;
                                     });
                                   },
-                                  //  Colors.orange,
                                 ),
                               ),
 
@@ -169,7 +167,6 @@ class _LowStockAlertsSectionState extends State<LowStockAlertsSection> {
                                           PlantDisplayStatus.warning;
                                     });
                                   },
-                                  //  Colors.amber,
                                 ),
                               ),
                             ],

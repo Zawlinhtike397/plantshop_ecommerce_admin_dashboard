@@ -50,7 +50,6 @@ class AlertSummaryBox extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: isDarkMode ? Colors.grey.shade400 : AppColor.midGray,
                   ),
-                  //  TextStyle(color: Colors.grey.shade600, fontSize: 15),
                 ),
                 const SizedBox(height: 4),
                 Text("$count", style: Theme.of(context).textTheme.titleLarge),

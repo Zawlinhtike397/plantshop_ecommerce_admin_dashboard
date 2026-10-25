@@ -46,7 +46,6 @@ class _ZSideBarState extends State<ZSideBar> {
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Column(
-                // spacing: 3,
                 children: [
                   SizedBox(height: 10),
                   Row(
@@ -96,21 +95,11 @@ class _ZSideBarState extends State<ZSideBar> {
                               route: AppRoutes.orders,
                               iconPath: ImageStrings.orderIcon,
                             ),
-                            // ZMenuItem(
-                            //   itemName: 'Customers',
-                            //   route: AppRoutes.customers,
-                            //   iconPath: ImageStrings.customerIcon,
-                            // ),
                             ZMenuItem(
                               itemName: 'Discount Cupons',
                               route: AppRoutes.discountCupons,
                               iconPath: ImageStrings.discountCuponIcon,
                             ),
-                            // ZMenuItem(
-                            //   itemName: 'Categories',
-                            //   route: AppRoutes.categories,
-                            //   iconPath: ImageStrings.categoryIcon,
-                            // ),
                             SizedBox(height: 9.0),
                             Text(
                               'System',
@@ -123,11 +112,6 @@ class _ZSideBarState extends State<ZSideBar> {
                                   ),
                             ),
                             SizedBox(height: 0.5),
-                            // ZMenuItem(
-                            //   itemName: 'Settings',
-                            //   route: AppRoutes.settings,
-                            //   iconPath: ImageStrings.settingsIcon,
-                            // ),
                             Padding(
                               padding: EdgeInsets.only(left: 6.0),
                               child: Row(
@@ -261,8 +245,8 @@ class _ZSideBarState extends State<ZSideBar> {
                                   uri: Uri.parse(AppRoutes.profile),
                                   builder: (context, followLink) => InkWell(
                                     onTap: () {
-                                      followLink?.call();
-                                      context.go(AppRoutes.profile);
+                                      // followLink?.call();
+                                      // context.go(AppRoutes.profile);
                                     },
                                     child: Text(
                                       'Plantify Admin',
@@ -272,7 +256,6 @@ class _ZSideBarState extends State<ZSideBar> {
                                           .copyWith(
                                             color: AppColor.darkTeal,
                                             fontSize: 13,
-                                            // fontWeight: FontWeight.bold,
                                           ),
                                     ),
                                   ),

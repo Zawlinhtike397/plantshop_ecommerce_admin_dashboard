@@ -17,7 +17,6 @@ class TimelineWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
-      // mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Column(
           children: [
@@ -36,10 +35,7 @@ class TimelineWidget extends StatelessWidget {
               Container(
                 width: 2,
                 height: 54,
-                color: isCompleted
-                    ? AppColor.primary
-                    //  const Color(0xFF4CAF50)
-                    : Colors.grey.shade300,
+                color: isCompleted ? AppColor.primary : Colors.grey.shade300,
               ),
           ],
         ),

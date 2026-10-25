@@ -29,10 +29,7 @@ class OverallDataCard extends StatelessWidget {
     return AppRoundedContainer(
       onTap: onTap,
       padding: EdgeInsets.all(15.0),
-      backgroundColor: dark
-          ? AppColor.dark1
-          // const Color(0xFF1A1A1A)
-          : AppColor.white,
+      backgroundColor: dark ? AppColor.dark1 : AppColor.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,7 +61,6 @@ class OverallDataCard extends StatelessWidget {
                       maxLines: 1,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: color,
-                        // TColors.success,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -80,7 +76,6 @@ class OverallDataCard extends StatelessWidget {
               return Align(
                 alignment: Alignment.bottomRight,
                 child: Wrap(
-                  // mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SizedBox(
                       width: isTiny ? 85 : 115,
@@ -90,7 +85,6 @@ class OverallDataCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.end,
-                        // overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],

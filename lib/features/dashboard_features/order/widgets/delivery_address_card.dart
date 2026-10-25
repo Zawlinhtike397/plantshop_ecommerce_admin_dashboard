@@ -13,7 +13,6 @@ class DeliveryAddressCard extends StatelessWidget {
       title: 'Delivery Address',
       child: Column(
         children: [
-          // DetailsRow(label: 'Contact Name:', value: 'Gym'),
           DetailsRow(label: 'Home no:', value: address?.homeNo ?? 'N/A'),
           DetailsRow(label: 'Street:', value: address?.street ?? 'N/A'),
           DetailsRow(label: 'Town', value: address?.city ?? 'N/A'),

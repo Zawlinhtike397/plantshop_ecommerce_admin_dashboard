@@ -13,7 +13,6 @@ class TabletLayout extends StatelessWidget {
       key: scaffoldKey,
       drawer: ZSideBar(),
       appBar: AppBar(),
-      //  AppHeader(scaffoldKey: scaffoldKey),
       body: body ?? SizedBox(),
     );
   }

@@ -119,69 +119,65 @@ class ProductMediaCard extends StatelessWidget {
                         : buildPickerBox(),
                   ] else ...[
                     if (providerState.additionalImagesBytes.isNotEmpty)
-                      ...List.generate(providerState.additionalImagesBytes.length, (
-                        index,
-                      ) {
-                        final bytes =
-                            providerState.additionalImagesBytes[index];
+                      ...List.generate(
+                        providerState.additionalImagesBytes.length,
+                        (index) {
+                          final bytes =
+                              providerState.additionalImagesBytes[index];
 
-                        final isNetworkImage =
-                            bytes.isEmpty &&
-                            providerState.additionalImagesWebUrls.length >
-                                index;
+                          final isNetworkImage =
+                              bytes.isEmpty &&
+                              providerState.additionalImagesWebUrls.length >
+                                  index;
 
-                        return Stack(
-                          children: [
-                            Container(
-                              width: 120,
-                              height: 120,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: AppColor.borderColor,
-                                  width: 0.5,
-                                ),
-                                image: DecorationImage(
-                                  image: isNetworkImage
-                                      // hasWebUrl
-                                      ? NetworkImage(
-                                              providerState
-                                                  .additionalImagesWebUrls![index],
-                                            )
-                                            as ImageProvider
-                                      : MemoryImage(
-                                          bytes,
-                                          // providerState
-                                          //     .additionalImagesBytes![index],
-                                        ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 4,
-                              right: 4,
-                              child: GestureDetector(
-                                onTap: () =>
-                                    providerState.removeAdditionalImage(index),
-
-                                child: Container(
-                                  padding: EdgeInsets.all(2),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.red,
-                                    shape: BoxShape.circle,
+                          return Stack(
+                            children: [
+                              Container(
+                                width: 120,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: AppColor.borderColor,
+                                    width: 0.5,
                                   ),
-                                  child: const Icon(
-                                    Icons.close,
-                                    size: 16,
-                                    color: Colors.white,
+                                  image: DecorationImage(
+                                    image: isNetworkImage
+                                        ? NetworkImage(
+                                                providerState
+                                                    .additionalImagesWebUrls![index],
+                                              )
+                                              as ImageProvider
+                                        : MemoryImage(bytes),
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        );
-                      }),
+                              Positioned(
+                                top: 4,
+                                right: 4,
+                                child: GestureDetector(
+                                  onTap: () => providerState
+                                      .removeAdditionalImage(index),
+
+                                  child: Container(
+                                    padding: EdgeInsets.all(2),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.red,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(
+                                      Icons.close,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     buildPickerBox(),
                   ],
                 ],

@@ -143,15 +143,6 @@ class LowStockCard extends StatelessWidget {
             ),
 
             const SizedBox(height: 8),
-
-            // Text(
-            //   "Product ID: ${items.productId}",
-            //   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-            //     color: isDarkMode ? Colors.grey.shade400 : Colors.grey.shade700,
-            //     fontWeight: FontWeight.normal,
-            //     fontSize: 15,
-            //   ),
-            // ),
             Text(
               "Category: ${items.category}",
               style: Theme.of(context).textTheme.titleMedium!.copyWith(

@@ -12,9 +12,7 @@ class MobileLayout extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       drawer: ZSideBar(),
-      // ZSideBar(),
       appBar: AppBar(),
-      // AppHeader(scaffoldKey: scaffoldKey),
       body: body ?? SizedBox(),
     );
   }

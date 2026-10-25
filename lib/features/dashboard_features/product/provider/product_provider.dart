@@ -110,7 +110,6 @@ class ProductProvider extends ChangeNotifier {
       thumbnailBytes = bytes;
       thumbnailFileName = image.name;
       thumbnailWebUrl = image.path;
-      // _thumbnailErrorText = null;
       notifyListeners();
     }
   }
