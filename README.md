@@ -2,7 +2,7 @@
 
 Plantify Admin Dashboard is a responsive Flutter Web application built to manage and monitor the Plantify plant shop e-commerce mobile app. The dashboard provides administrators with a centralized interface for managing plants, orders, discounts, and other store-related information. 
 
-🔗 **Built APK version of app:**
+🔗 **Built admin dashboard website:**
     https://plantshopecommerceadmindashboard.vercel.app/
 
 ## 🏗️ Architecture
