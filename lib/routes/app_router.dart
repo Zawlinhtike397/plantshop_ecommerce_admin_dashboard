@@ -4,7 +4,6 @@ import 'package:plantfiy_plantshop_admin_dashboard/data/repositories/authenticat
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/app/bloc/app_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/authentication/login/screen/login_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/categories/screen/category_screen.dart';
-import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/customer/screen/customer_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/dashboard/screen/dashboard_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/discount/screen/discount_screen.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/order/model/order_model.dart';
@@ -50,10 +49,7 @@ class AppRouter {
               path: AppRoutes.orders,
               builder: (context, state) => const OrderScreen(),
             ),
-            GoRoute(
-              path: AppRoutes.customers,
-              builder: (context, state) => const CustomerScreen(),
-            ),
+
             GoRoute(
               path: AppRoutes.discountCupons,
               builder: (context, state) => const DiscountScreen(),

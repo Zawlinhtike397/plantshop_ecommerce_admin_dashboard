@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/discount/bloc/discount_bloc.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/features/dashboard_features/discount/model/discount_model.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/constants/colors.dart';
+import 'package:plantfiy_plantshop_admin_dashboard/utils/themes/cubit/theme_cubit.dart';
 import 'package:plantfiy_plantshop_admin_dashboard/utils/validator/validation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -77,28 +78,31 @@ class _AddEditDiscountDialogState extends State<AddEditDiscountDialog> {
     }
   }
 
-  Widget _buildLabel(String text) {
-    return Text(text, style: const TextStyle(fontSize: 10, color: Colors.grey));
+  Widget _buildLabel(String text, {Color? color}) {
+    return Text(text, style: TextStyle(fontSize: 10, color: color));
   }
 
   Widget _buildTextField({
     required TextEditingController controller,
     TextInputType? keyboardType,
     String? Function(String?)? validator,
+    required Color borderColor,
+    Color? textColor,
   }) {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       validator: validator,
+      style: TextStyle(color: textColor),
       decoration: InputDecoration(
         errorStyle: TextStyle(color: Colors.red),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderSide: BorderSide(color: borderColor),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderSide: BorderSide(color: borderColor),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -131,7 +135,7 @@ class _AddEditDiscountDialogState extends State<AddEditDiscountDialog> {
           child: Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: Colors.white,
+            activeThumbColor: Colors.white,
             activeTrackColor: AppColor.buttonPrimary,
           ),
         ),
@@ -187,13 +191,31 @@ class _AddEditDiscountDialogState extends State<AddEditDiscountDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode =
+        context.watch<ThemeCubit>().state.isDarkMode ||
+        Theme.of(context).brightness == Brightness.dark;
+
+    final backgroundColor = isDarkMode ? const Color(0xFF1E1E1E) : Colors.white;
+
+    final textColor = isDarkMode ? Colors.white : Colors.black87;
+
+    final secondaryTextColor = isDarkMode
+        ? Colors.grey.shade400
+        : Colors.grey.shade600;
+
+    final borderColor = isDarkMode
+        ? Colors.grey.shade700
+        : Colors.grey.shade300;
+
+    final labelColor = isDarkMode ? Colors.grey.shade400 : Colors.grey;
+
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
         width: 594,
         padding: const EdgeInsets.fromLTRB(22, 18, 22, 28),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Form(
@@ -206,11 +228,12 @@ class _AddEditDiscountDialogState extends State<AddEditDiscountDialog> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       'Add Coupon',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        color: textColor,
                       ),
                     ),
                     IconButton(
@@ -226,13 +249,15 @@ class _AddEditDiscountDialogState extends State<AddEditDiscountDialog> {
 
                 const SizedBox(height: 32),
 
-                _buildLabel('Title'),
+                _buildLabel('Title', color: labelColor),
                 const SizedBox(height: 8),
                 _buildTextField(
                   controller: titleController,
                   validator: (value) {
                     return Validator.validateIsEmpty(value, 'Title');
                   },
+                  borderColor: borderColor,
+                  textColor: textColor,
                 ),
 
                 const SizedBox(height: 18),
@@ -243,13 +268,15 @@ class _AddEditDiscountDialogState extends State<AddEditDiscountDialog> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildLabel('Code'),
+                          _buildLabel('Code', color: labelColor),
                           const SizedBox(height: 8),
                           _buildTextField(
                             controller: codeController,
                             validator: (value) {
                               return Validator.validateIsEmpty(value, 'Code');
                             },
+                            borderColor: borderColor,
+                            textColor: textColor,
                           ),
                         ],
                       ),
@@ -259,11 +286,13 @@ class _AddEditDiscountDialogState extends State<AddEditDiscountDialog> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildLabel('Discount Percentage'),
+                          _buildLabel('Discount Percentage', color: labelColor),
                           const SizedBox(height: 8),
                           _buildTextField(
                             controller: percentageController,
                             keyboardType: TextInputType.number,
+                            borderColor: borderColor,
+                            textColor: textColor,
                             validator: (value) {
                               final error = Validator.validateIsEmpty(
                                 value,
@@ -295,11 +324,13 @@ class _AddEditDiscountDialogState extends State<AddEditDiscountDialog> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildLabel('Minimum Amount'),
+                          _buildLabel('Minimum Amount', color: labelColor),
                           const SizedBox(height: 8),
                           _buildTextField(
                             controller: minimumAmountController,
                             keyboardType: TextInputType.number,
+                            borderColor: borderColor,
+                            textColor: textColor,
                             validator: (value) {
                               final error = Validator.validateIsEmpty(
                                 value,
@@ -331,7 +362,7 @@ class _AddEditDiscountDialogState extends State<AddEditDiscountDialog> {
 
                 const SizedBox(height: 18),
 
-                _buildLabel('Expired Date'),
+                _buildLabel('Expired Date', color: labelColor),
                 const SizedBox(height: 8),
 
                 InkWell(
@@ -358,6 +389,8 @@ class _AddEditDiscountDialogState extends State<AddEditDiscountDialog> {
                             fontSize: 14,
                             color: expiredDate == null
                                 ? Colors.grey.shade600
+                                : isDarkMode
+                                ? Colors.white
                                 : Colors.black87,
                           ),
                         ),
@@ -404,7 +437,7 @@ class _AddEditDiscountDialogState extends State<AddEditDiscountDialog> {
 
                 const SizedBox(height: 20),
 
-                _buildLabel('Rules'),
+                _buildLabel('Rules', color: labelColor),
                 const SizedBox(height: 8),
 
                 TextFormField(
@@ -413,11 +446,11 @@ class _AddEditDiscountDialogState extends State<AddEditDiscountDialog> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderSide: BorderSide(color: borderColor),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderSide: BorderSide(color: borderColor),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
